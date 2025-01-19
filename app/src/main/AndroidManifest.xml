@@ -13,11 +13,11 @@
         android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="35">
         <activity
-            android:name=".ui.HomeActivity"
-            android:parentActivityName="ui.WelcomeActivity"
+            android:name=".ui.userinterface.HomeActivity"
+            android:parentActivityName=".ui.userinterface.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.userinterface.WelcomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light">
