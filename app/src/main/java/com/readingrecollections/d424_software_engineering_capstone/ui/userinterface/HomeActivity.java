@@ -1,6 +1,8 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +28,18 @@ public class HomeActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // Calls the add author button from activity_home.xml
+        Button buttonAddAuthor = findViewById(R.id.add_author_button);
+
+        // Sets onClick to take the user to the AddAuthorActivity.xml page
+        buttonAddAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, AddAuthorActivity.class);
+                startActivity(intent);
+            }
         });
 
         // Initializes a repository for managing data operations
