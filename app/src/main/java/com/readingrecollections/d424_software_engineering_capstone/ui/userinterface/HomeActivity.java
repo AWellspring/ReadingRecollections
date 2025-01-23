@@ -28,8 +28,10 @@ public class HomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Initializes a repository for managing data operations
         repository = new Repository(getApplication());
 
+        // A temporary button for inserting sample data
         Button searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(v -> {
             repository.insertSampleData();
@@ -43,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    // Click back button takes the user to the parent activity defined in Manifest
+    // Clicking the back button takes the user to the parent activity defined in Manifest
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

@@ -10,9 +10,12 @@ import com.readingrecollections.d424_software_engineering_capstone.ui.entities.B
 
 @Dao
 public interface BookDao {
+
+    // Inserts the book into the database
     @Insert
     void insert(Book book);
 
+    // Retrieves all rows from the book table
     @Query("SELECT * FROM book")
     List<Book> getAllBooks();
 }

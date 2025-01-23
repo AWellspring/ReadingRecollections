@@ -10,15 +10,20 @@ import com.readingrecollections.d424_software_engineering_capstone.ui.entities.A
 
 @Dao
 public interface AuthorDao {
+
+    // Inserts the author into the database
     @Insert
     void insert(Author author);
 
+    // Retrieves all rows from the author table
     @Query("SELECT * FROM author")
     List<Author> getAllAuthors();
 
+    // Searches author table for authorName, returns author object if found
     @Query("SELECT * FROM author WHERE authorName = :authorName LIMIT 1")
     Author getAuthorByName(String authorName);
 
+    // Searches author table for authorName, returns author id if found
     @Query("SELECT id FROM author WHERE authorName = :authorName LIMIT 1")
     int getAuthorIdByName(String authorName);
 }
