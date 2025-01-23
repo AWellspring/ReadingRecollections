@@ -46,10 +46,10 @@ public class HomeActivity extends AppCompatActivity {
         repository = new Repository(getApplication());
 
         // A temporary button for inserting sample data
-        Button searchButton = findViewById(R.id.search_button);
-        searchButton.setOnClickListener(v -> {
-            repository.insertSampleData();
-        });
+        //Button searchButton = findViewById(R.id.search_button);
+        //searchButton.setOnClickListener(v -> {
+            //repository.insertSampleData();
+        //});
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {

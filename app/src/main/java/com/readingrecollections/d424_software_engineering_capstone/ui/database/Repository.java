@@ -21,7 +21,7 @@ public class Repository {
     private BookDao mBookDao;
 
     // Handles background task execution without blocking the main thread
-    private Executor executor;
+    public Executor executor;
 
     // Initializes the repository
     // Calls the DatabaseBuilder  and passes through the book and author daos
@@ -35,39 +35,50 @@ public class Repository {
     }
 
     // Adds sample data to the database
-    public void insertSampleData() {
-        executor.execute(() -> {
+    //public void insertSampleData() {
+        //executor.execute(() -> {
 
             // Calls function defined below to insert author if not already in database
-            insertAuthorIfNotExists("Jim Butcher");
-            insertAuthorIfNotExists("Robin McKinley");
-            insertAuthorIfNotExists("C. M. Waggoner");
+            //insertAuthorIfNotExists("Jim Butcher");
+            //insertAuthorIfNotExists("Robin McKinley");
+           // insertAuthorIfNotExists("C. M. Waggoner");
 
             // Creates authorId variable
             // Queries database to find author by name and retrieve that author's id
-            int authorId = mAuthorDao.getAuthorIdByName("C. M. Waggoner");
+            //int authorId = mAuthorDao.getAuthorIdByName("C. M. Waggoner");
 
             // Creates a new book entity and sets its parameters
             // Sets the author id to match the previously retrieved author id
             // Inserts into database
-            Book book2 = new Book();
-            book2.setTitle("The Village Library Demon Hunter's Society");
-            book2.setGenre("Fantasy");
-            book2.setAuthorId(authorId);
-            book2.setDateRead(LocalDate.parse("2024-12-01"));
-            mBookDao.insert(book2);
+            //Book book2 = new Book();
+            //book2.setTitle("The Village Library Demon Hunter's Society");
+            //book2.setGenre("Fantasy");
+            //book2.setAuthorId(authorId);
+            //book2.setDateRead(LocalDate.parse("2024-12-01"));
+            //mBookDao.insert(book2);
+        //});
+    //}
+
+    // Adds an author to the database if they don't already exist
+    public void insertAuthorIfNotExists(String authorName, Runnable onComplete) {
+        executor.execute(() -> {
+            // Check if the author already exists
+            Author existingAuthor = mAuthorDao.getAuthorByName(authorName);
+            if (existingAuthor == null) {
+                // Author does not exist, so they are added
+                Author newAuthor = new Author();
+                newAuthor.setAuthorName(authorName);
+                mAuthorDao.insert(newAuthor);
+            }
+
+            if (onComplete != null) {
+                onComplete.run();
+            }
         });
     }
 
-    // Adds an author to the database if they don't already exist
-    private void insertAuthorIfNotExists(String authorName) {
-        // Check if the author already exists
-        Author existingAuthor = mAuthorDao.getAuthorByName(authorName);
-        if (existingAuthor == null) {
-            // Author does not exist, so they are added
-            Author newAuthor = new Author();
-            newAuthor.setAuthorName(authorName);
-            mAuthorDao.insert(newAuthor);
-        }
+    // Returns author whose name matches
+    public Author getAuthorByName(String authorName) {
+        return mAuthorDao.getAuthorByName(authorName);
     }
 }
