@@ -24,7 +24,7 @@ public class Repository {
     public Executor executor;
 
     // Initializes the repository
-    // Calls the DatabaseBuilder  and passes through the book and author daos
+    // Calls the DatabaseBuilder and passes through the book and author daos
     // Assigns the single-thread executor
     public Repository(Application application){
         DatabaseBuilder db = DatabaseBuilder.getDatabase(application);
@@ -71,6 +71,7 @@ public class Repository {
                 mAuthorDao.insert(newAuthor);
             }
 
+            // Reverts to main thread for the Toast command
             if (onComplete != null) {
                 onComplete.run();
             }
