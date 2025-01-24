@@ -74,7 +74,7 @@ public class AddAuthorActivity extends AppCompatActivity {
 
                     // If the author is in the database, display message
                     if (existingAuthor != null) {
-                        Toast.makeText(this, "Author already in your library", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Author already in your library", Toast.LENGTH_LONG).show();
                     }
 
                     // Adds the author to the database
@@ -84,7 +84,7 @@ public class AddAuthorActivity extends AppCompatActivity {
 
                             // Returns to main thread for UI display
                             runOnUiThread(() -> {
-                                Toast.makeText(AddAuthorActivity.this, "Author saved to your library!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddAuthorActivity.this, "Author saved to your library!", Toast.LENGTH_LONG).show();
 
                                 // Returns user to previous page
                                 finish();
@@ -97,7 +97,7 @@ public class AddAuthorActivity extends AppCompatActivity {
 
         // Prompts user to enter a string if field is empty
         else{
-            Toast.makeText(this, "Please enter the author's name.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter the author's name.", Toast.LENGTH_LONG).show();
         }
     }
 
