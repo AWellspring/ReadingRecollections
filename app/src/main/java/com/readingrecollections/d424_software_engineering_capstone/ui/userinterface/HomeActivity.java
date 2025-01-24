@@ -42,6 +42,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Calls the add book button from activity_home.xml
+        Button buttonAddBook = findViewById(R.id.add_book_button);
+
+        // Sets onClick to take teh user to the AddBookActivity.xml page
+        buttonAddBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, AddBookActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Initializes a repository for managing data operations
         repository = new Repository(getApplication());
 

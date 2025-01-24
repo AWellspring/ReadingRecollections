@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.userinterface.AddBookActivity">
+
+    <!-- Small banner image -->
+    <ImageView
+        android:id="@+id/banner_image"
+        android:layout_width="300dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/reading_recollections_banner"
+        app:layout_constraintBottom_toTopOf="@+id/input_title_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Text view with an editable field for the Book Title string
+        Formatted so the EditText is aligned horizontally with the TextView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/input_title_field"
+        app:layout_constraintTop_toBottomOf="@+id/banner_image">
+
+        <TextView
+            android:id="@+id/label_book_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Title: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/book_title_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Title"
+            android:textSize="20sp"
+            android:inputType="text"
+            android:gravity="right"
+            android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+
+    <!-- Text view with an editable field for the Author Name string
+        Formatted so the EditText is aligned horizontally with the TextView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/input_author_field"
+        app:layout_constraintTop_toBottomOf="@+id/input_title_field">
+
+        <TextView
+            android:id="@+id/label_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/author_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Author Name"
+            android:textSize="20sp"
+            android:inputType="text"
+            android:gravity="right"
+            android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+
+    <!-- Text view with an editable field for the Book Genre string
+        Formatted so the EditText is aligned horizontally with the TextView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/input_genre_field"
+        app:layout_constraintTop_toBottomOf="@+id/input_author_field">
+
+        <TextView
+            android:id="@+id/label_book_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genre: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/book_genre_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Genre"
+            android:textSize="20sp"
+            android:inputType="text"
+            android:gravity="right"
+            android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+
+    <!-- Text view with an editable field for the Book Genre string
+    Formatted so the EditText is aligned horizontally with the TextView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/input_date_field"
+        app:layout_constraintTop_toBottomOf="@+id/input_genre_field">
+
+        <TextView
+            android:id="@+id/label_date_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Read: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/date_read_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Date Read"
+            android:textSize="20sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:gravity="right"
+            android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+
+    <!-- Button to add author to database -->
+    <Button
+        android:id="@+id/save_book_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Save"
+        android:textSize="30sp"
+        android:textAllCaps="false"
+        android:background="@drawable/rounded_button"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
