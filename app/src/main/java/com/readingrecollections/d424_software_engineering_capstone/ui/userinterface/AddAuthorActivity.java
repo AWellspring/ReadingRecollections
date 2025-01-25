@@ -82,6 +82,8 @@ public class AddAuthorActivity extends AppCompatActivity {
 
                     // Adds the author to the database
                     else {
+                        // Clears the error message
+                        textInputLayout.setError(null);
                         // Runs in a background thread
                         mRepository.insertAuthorIfNotExists(authorName, () -> {
 
