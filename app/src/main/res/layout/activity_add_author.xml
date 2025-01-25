@@ -38,16 +38,25 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/author_name_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/author_name_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Full Name"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:gravity="right"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/author_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Full Name"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="start|center_vertical"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Button to add author to database -->

@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.readingrecollections.d424_software_engineering_capstone.R;
 import com.readingrecollections.d424_software_engineering_capstone.ui.database.Repository;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
@@ -60,6 +61,8 @@ public class AddAuthorActivity extends AppCompatActivity {
         // Takes the user input, converts it to a string, and removes extra spaces
         String authorName = authorNameInput.getText().toString().trim();
 
+        TextInputLayout textInputLayout = findViewById(R.id.author_name_input_layout);
+
         // Checks whether the string is empty
         if (!authorName.isEmpty()) {
 
@@ -74,7 +77,7 @@ public class AddAuthorActivity extends AppCompatActivity {
 
                     // If the author is in the database, display message
                     if (existingAuthor != null) {
-                        Toast.makeText(this, "Author already in your library", Toast.LENGTH_LONG).show();
+                        textInputLayout.setError("Author already in your library.");
                     }
 
                     // Adds the author to the database
@@ -97,7 +100,7 @@ public class AddAuthorActivity extends AppCompatActivity {
 
         // Prompts user to enter a string if field is empty
         else{
-            Toast.makeText(this, "Please enter the author's name.", Toast.LENGTH_LONG).show();
+            textInputLayout.setError("Please enter the author's name.");
         }
     }
 
