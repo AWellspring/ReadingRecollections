@@ -26,6 +26,12 @@ public class Book {
     @TypeConverters(DateConverter.class)
     private LocalDate dateRead;
 
+    private Boolean isSeries;
+
+    private String seriesName;
+
+    private int seriesNumber;
+
     public int getId() {
         return id;
     }
@@ -64,5 +70,29 @@ public class Book {
 
     public void setDateRead(LocalDate dateRead) {
         this.dateRead = dateRead;
+    }
+
+    public Boolean getSeries() {
+        return isSeries;
+    }
+
+    public void setSeries(Boolean series) {
+        isSeries = series;
+    }
+
+    public String getSeriesName() {
+        return seriesName;
+    }
+
+    public void setSeriesName(String seriesName) {
+        this.seriesName = seriesName;
+    }
+
+    public int getSeriesNumber() {
+        return seriesNumber;
+    }
+
+    public void setSeriesNumber(int seriesNumber) {
+        this.seriesNumber = seriesNumber;
     }
 }
