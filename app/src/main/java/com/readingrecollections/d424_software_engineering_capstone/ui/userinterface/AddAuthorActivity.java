@@ -38,7 +38,7 @@ public class AddAuthorActivity extends AppCompatActivity {
         // Initializes the repository
         mRepository = new Repository(getApplication());
 
-        // Sets authorNameInput to the user input
+        // Sets authorNameInput to the edit text field
         authorNameInput = findViewById(R.id.author_name_input);
 
         // Initializes the save author button

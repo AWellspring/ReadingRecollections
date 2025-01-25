@@ -131,17 +131,24 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/date_read_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Date (Optional)"
-            android:textSize="20sp"
-            android:focusable="false"
-            android:clickable="true"
-            android:gravity="end"
-            android:layout_marginEnd="10dp"/>
+            android:hint="Date (Optional)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/date_read_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="none"
+                android:gravity="end"
+                android:layout_marginEnd="10dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Text view with a radio field for the isSeries Boolean
