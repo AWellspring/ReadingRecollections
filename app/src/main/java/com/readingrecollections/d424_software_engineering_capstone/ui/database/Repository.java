@@ -34,52 +34,36 @@ public class Repository {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    // Adds sample data to the database
-    //public void insertSampleData() {
-        //executor.execute(() -> {
-
-            // Calls function defined below to insert author if not already in database
-            //insertAuthorIfNotExists("Jim Butcher");
-            //insertAuthorIfNotExists("Robin McKinley");
-           // insertAuthorIfNotExists("C. M. Waggoner");
-
-            // Creates authorId variable
-            // Queries database to find author by name and retrieve that author's id
-            //int authorId = mAuthorDao.getAuthorIdByName("C. M. Waggoner");
-
-            // Creates a new book entity and sets its parameters
-            // Sets the author id to match the previously retrieved author id
-            // Inserts into database
-            //Book book2 = new Book();
-            //book2.setTitle("The Village Library Demon Hunter's Society");
-            //book2.setGenre("Fantasy");
-            //book2.setAuthorId(authorId);
-            //book2.setDateRead(LocalDate.parse("2024-12-01"));
-            //mBookDao.insert(book2);
-        //});
-    //}
-
     // Adds an author to the database if they don't already exist
-    public void insertAuthorIfNotExists(String authorName, Runnable onComplete) {
+    public void insertAuthorIfNotExists(Author author, Runnable onSuccess, Runnable onAuthorExists) {
         executor.execute(() -> {
-            // Check if the author already exists
-            Author existingAuthor = mAuthorDao.getAuthorByName(authorName);
+            // Generates the author's full name
+            author.updateFullName();
+
+            // Check if the author already exists by comparing full name
+            Author existingAuthor = mAuthorDao.getAuthorByName(author.getAuthorFullName());
+
             if (existingAuthor == null) {
                 // Author does not exist, so they are added
-                Author newAuthor = new Author();
-                newAuthor.setAuthorName(authorName);
-                mAuthorDao.insert(newAuthor);
+                mAuthorDao.insert(author);
+
+                // Returns success runnable, prompting success Toast
+                if (onSuccess != null) {
+                    onSuccess.run();
+                }
             }
 
-            // Reverts to main thread for the Toast command
-            if (onComplete != null) {
-                onComplete.run();
+            // Returns author exists runnable, prompting author exists Toast
+            else {
+                if (onAuthorExists != null) {
+                    onAuthorExists.run();
+                }
             }
         });
     }
 
     // Returns author whose name matches
-    public Author getAuthorByName(String authorName) {
-        return mAuthorDao.getAuthorByName(authorName);
+    public Author getAuthorByName(String fullName) {
+        return mAuthorDao.getAuthorByName(fullName);
     }
 }

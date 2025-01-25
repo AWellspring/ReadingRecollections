@@ -19,11 +19,11 @@ public interface AuthorDao {
     @Query("SELECT * FROM author")
     List<Author> getAllAuthors();
 
-    // Searches author table for authorName, returns author object if found
-    @Query("SELECT * FROM author WHERE authorName = :authorName LIMIT 1")
-    Author getAuthorByName(String authorName);
+    // Searches author table for authorFullName, returns author object if found
+    @Query("SELECT * FROM author WHERE authorFullName = :fullName LIMIT 1")
+    Author getAuthorByName(String fullName);
 
-    // Searches author table for authorName, returns author id if found
-    @Query("SELECT id FROM author WHERE authorName = :authorName LIMIT 1")
-    int getAuthorIdByName(String authorName);
+    // Searches author table for authorFullName, returns author id if found
+    @Query("SELECT id FROM author WHERE authorFullName = :fullName LIMIT 1")
+    int getAuthorIdByName(String fullName);
 }

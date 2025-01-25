@@ -21,8 +21,18 @@ public class AddAuthorActivity extends AppCompatActivity {
     // Repository for database operations
     private Repository mRepository;
 
-    // User input for author name
-    private EditText authorNameInput;
+    // User input for author first name
+    private EditText authorFirstNameInput;
+
+    // User input for author middle name
+    private EditText authorMiddleNameInput;
+
+    // User input for author last name
+    private EditText authorLastNameInput;
+
+    private TextInputLayout firstNameLayout;
+
+    private TextInputLayout lastNameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +48,20 @@ public class AddAuthorActivity extends AppCompatActivity {
         // Initializes the repository
         mRepository = new Repository(getApplication());
 
-        // Sets authorNameInput to the edit text field
-        authorNameInput = findViewById(R.id.author_name_input);
+        // Sets authorFirstNameInput to the edit text field
+        authorFirstNameInput = findViewById(R.id.author_first_name_input);
+
+        // Sets authorMiddleNameInput to the edit text field
+        authorMiddleNameInput = findViewById(R.id.author_middle_name_input);
+
+        // Sets authorLastNameInput to the edit text field
+        authorLastNameInput = findViewById(R.id.author_last_name_input);
+
+        // Sets firstNameLayout to the layout field
+        firstNameLayout = findViewById(R.id.author_first_name_input_layout);
+
+        // Sets lastNameLayout to the layout field
+        lastNameLayout = findViewById(R.id.author_last_name_input_layout);
 
         // Initializes the save author button
         Button saveAuthorButton = findViewById(R.id.save_author_button);
@@ -59,50 +81,59 @@ public class AddAuthorActivity extends AppCompatActivity {
     private void addAuthor() {
 
         // Takes the user input, converts it to a string, and removes extra spaces
-        String authorName = authorNameInput.getText().toString().trim();
+        String firstName = authorFirstNameInput.getText().toString().trim();
+        String middleName = authorMiddleNameInput.getText().toString().trim();
+        String lastName = authorLastNameInput.getText().toString().trim();
 
-        TextInputLayout textInputLayout = findViewById(R.id.author_name_input_layout);
+        // Used to check validity of firstName and lastName
+        boolean isValid = true;
 
-        // Checks whether the string is empty
-        if (!authorName.isEmpty()) {
+        // Clears existing error messages
+        firstNameLayout.setError(null);
+        lastNameLayout.setError(null);
 
-            // Uses a background thread
-            mRepository.executor.execute(() -> {
-
-                // Checks database for author by name
-                Author existingAuthor = mRepository.getAuthorByName(authorName);
-
-                // Returns to main thread for UI display
-                runOnUiThread(() -> {
-
-                    // If the author is in the database, display message
-                    if (existingAuthor != null) {
-                        textInputLayout.setError("Author already in your library.");
-                    }
-
-                    // Adds the author to the database
-                    else {
-                        // Clears the error message
-                        textInputLayout.setError(null);
-                        // Runs in a background thread
-                        mRepository.insertAuthorIfNotExists(authorName, () -> {
-
-                            // Returns to main thread for UI display
-                            runOnUiThread(() -> {
-                                Toast.makeText(AddAuthorActivity.this, "Author saved to your library!", Toast.LENGTH_LONG).show();
-
-                                // Returns user to previous page
-                                finish();
-                            });
-                        });
-                    }
-                });
-            });
+        // Validates first name
+        if (firstName.isEmpty()) {
+            firstNameLayout.setError("Please enter a first name");
+            isValid = false;
         }
 
-        // Prompts user to enter a string if field is empty
-        else{
-            textInputLayout.setError("Please enter the author's name.");
+        // Validates last name
+        if (lastName.isEmpty()) {
+            lastNameLayout.setError("Please enter a last name");
+            isValid = false;
+        }
+
+        // Creates author if fields are valid
+        if (isValid) {
+            // Sets author name fields to user input
+            mRepository.executor.execute(() -> {
+                Author author = new Author();
+                author.setAuthorFirstName(firstName);
+                author.setAuthorMiddleName(middleName);
+                author.setAuthorLastName(lastName);
+                // Generates full name
+                author.updateFullName();
+
+                // Passes author to insertAuthorIfNotExists in Repository
+                // Passes on 2 runnables, onSuccess and onAuthorExists
+                mRepository.insertAuthorIfNotExists(author,
+                        () -> {
+                            // Author does not exist in database
+                            // Author is saved, success Toast is displayed
+                            runOnUiThread(() -> {
+                                Toast.makeText(AddAuthorActivity.this, "Author saved to your library!", Toast.LENGTH_LONG).show();
+                                finish();
+                            });
+                        },
+                        () -> {
+                            // Author already exists in database
+                            // Author is not saved, Toast is displayed
+                            runOnUiThread(() -> {
+                                Toast.makeText(AddAuthorActivity.this, "Author already in your library.", Toast.LENGTH_LONG).show();
+                            });
+                        });
+            });
         }
     }
 

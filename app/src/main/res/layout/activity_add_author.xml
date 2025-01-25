@@ -14,25 +14,25 @@
         android:layout_height="125dp"
         android:layout_marginBottom="16dp"
         app:srcCompat="@drawable/reading_recollections_banner"
-        app:layout_constraintBottom_toTopOf="@+id/input_text_field"
+        app:layout_constraintBottom_toTopOf="@+id/input_first_name_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Text view with an editable field for the Author Name string
+    <!-- Text view with an editable field for the Author First Name string
         Formatted so the EditText is aligned horizontally with the TextView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/input_text_field"
+        android:id="@+id/input_first_name_field"
         app:layout_constraintTop_toBottomOf="@+id/banner_image">
 
         <TextView
-            android:id="@+id/label_author_name"
+            android:id="@+id/label_author_first_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Author Name: "
+            android:text="First Name: "
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -40,7 +40,7 @@
 
         <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/author_name_input_layout"
+            android:id="@+id/author_first_name_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,13 +49,93 @@
             android:paddingEnd="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/author_name_input"
+                android:id="@+id/author_first_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Full Name"
+                android:hint="First Name"
                 android:textSize="20sp"
                 android:inputType="text"
-                android:gravity="start|center_vertical"/>
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Text view with an editable field for the Author Middle Name string
+        Formatted so the EditText is aligned horizontally with the TextView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/input_middle_name_field"
+        app:layout_constraintTop_toBottomOf="@+id/input_first_name_field">
+
+        <TextView
+            android:id="@+id/label_author_middle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Middle Name: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/author_middle_name_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/author_middle_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Middle Name (Optional)"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Text view with an editable field for the Author Last Name string
+        Formatted so the EditText is aligned horizontally with the TextView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/input_text_field"
+        app:layout_constraintTop_toBottomOf="@+id/input_middle_name_field">
+
+        <TextView
+            android:id="@+id/label_author_last_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Name: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/author_last_name_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/author_last_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="end"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 

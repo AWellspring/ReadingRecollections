@@ -14,7 +14,7 @@ import com.readingrecollections.d424_software_engineering_capstone.ui.entities.B
 // Marks this class as a database
 // Specifies the 2 tables, author and book
 // Version needs to be updated after any schema changes
-@Database(entities = {Author.class, Book.class}, version = 4)
+@Database(entities = {Author.class, Book.class}, version = 5)
 @TypeConverters({DateConverter.class})
 public abstract class DatabaseBuilder extends androidx.room.RoomDatabase {
 
