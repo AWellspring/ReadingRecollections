@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.readingrecollections.d424_software_engineering_capstone.R;
+import com.readingrecollections.d424_software_engineering_capstone.ui.database.DateConverter;
 import com.readingrecollections.d424_software_engineering_capstone.ui.database.Repository;
 
 import java.time.LocalDate;
@@ -90,9 +91,15 @@ public class AddBookActivity extends AppCompatActivity {
             // The default date on click is set as the current date
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     AddBookActivity.this,
-                    (view, year1, month1, dayOfMonth1) -> {
-                        LocalDate selectedDate = LocalDate.of(year1, month1 + 1, dayOfMonth1); // month is zero-indexed
-                        dateReadInput.setText(selectedDate.format(dateFormatter));
+                    // Convert the selected date to LocalDate
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        LocalDate selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay);
+
+                        // Use DateConverter.formatter to format the selected date
+                        String formattedDate = selectedDate.format(DateConverter.formatter);
+
+                        // Set the formatted date in the EditText field
+                        dateReadInput.setText(formattedDate);
                     },
                     year, month, dayOfMonth
             );

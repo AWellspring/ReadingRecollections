@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 // Converts LocalDate to or from a String
 public class DateConverter {
 
-    // Sets format for the converter to YEAR-MONTH-DAY, eg "2025-01-20"
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+    // Sets format for the converter to "MMMM d, yyyy", eg "January 20, 2025"
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
     // Converts from String into LocalDate
     @TypeConverter
