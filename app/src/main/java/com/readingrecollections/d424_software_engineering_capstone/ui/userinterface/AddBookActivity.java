@@ -103,6 +103,9 @@ public class AddBookActivity extends AppCompatActivity {
                     },
                     year, month, dayOfMonth
             );
+            // Set the maximum date to today to prevent future dates
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
             // Displays the datePicker created above
             datePickerDialog.show();
         });
