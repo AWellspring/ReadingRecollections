@@ -38,16 +38,25 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/book_title_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/book_title_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Title"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:gravity="end"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/book_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Text view with an editable field for the Author Name string
@@ -69,16 +78,25 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/author_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/author_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Author Name"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:gravity="end"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/author_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Author Name"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Text view with an editable field for the Book Genre string
@@ -100,16 +118,25 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/book_genre_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/book_genre_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Genre (Optional)"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:gravity="end"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/book_genre_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Genre (Optional)"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Text view with an editable field for the Book Genre string
@@ -178,30 +205,40 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <RadioGroup
-                android:id="@+id/series_radio_group"
+            <!-- Wrap the RadioGroup in a TextInputLayout -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/series_input_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:hint="Select Series"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <RadioButton
-                    android:id="@+id/series_yes"
+                <RadioGroup
+                    android:id="@+id/series_radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes"
-                    android:textSize="20sp" />
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-                <RadioButton
-                    android:id="@+id/series_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No"
-                    android:textSize="20sp"
-                    android:checked="true"/>
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/series_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/series_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:textSize="20sp"
+                        android:checked="true"/>
+                </RadioGroup>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -226,16 +263,25 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/series_name_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/series_name_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Name (Optional)"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:gravity="end"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/series_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name (Optional)"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Text view with an editable field for the Series Number string
@@ -257,17 +303,26 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <EditText
-            android:id="@+id/series_number_input"
+        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/series_number_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Number (Optional)"
-            android:textSize="20sp"
-            android:inputType="number"
-            android:maxLength="3"
-            android:gravity="end"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            app:hintEnabled="true"
+            android:paddingEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/series_number_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number (Optional)"
+                android:textSize="20sp"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="end"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!-- Button to add author to database -->

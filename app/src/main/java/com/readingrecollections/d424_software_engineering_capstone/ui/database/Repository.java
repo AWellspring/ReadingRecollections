@@ -62,6 +62,22 @@ public class Repository {
         });
     }
 
+    public void insertBook(Book book, Runnable onSuccess, Runnable onFailure) {
+        executor.execute(() -> {
+            try {
+                // Insert the book into the database
+                mBookDao.insert(book);
+
+                if (onSuccess != null) {
+                    onSuccess.run();
+                }
+            } catch (Exception e) {
+                // In case of an error, run the failure callback on the UI thread
+                onFailure.run();
+            }
+        });
+    }
+
     // Returns author whose name matches
     public Author getAuthorByName(String fullName) {
         return mAuthorDao.getAuthorByName(fullName);

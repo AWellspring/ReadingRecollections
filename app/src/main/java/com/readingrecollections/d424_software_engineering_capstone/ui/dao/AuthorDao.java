@@ -26,4 +26,8 @@ public interface AuthorDao {
     // Searches author table for authorFullName, returns author id if found
     @Query("SELECT id FROM author WHERE authorFullName = :fullName LIMIT 1")
     int getAuthorIdByName(String fullName);
+
+    @Query("SELECT * FROM author WHERE id = :authorId")
+    Author getAuthorById(int authorId);
 }
+

@@ -2,9 +2,11 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.userinter
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +14,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.readingrecollections.d424_software_engineering_capstone.R;
 import com.readingrecollections.d424_software_engineering_capstone.ui.database.DateConverter;
 import com.readingrecollections.d424_software_engineering_capstone.ui.database.Repository;
+import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
+import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Book;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -55,6 +60,12 @@ public class AddBookActivity extends AppCompatActivity {
     // User input for series book number
     private EditText seriesNumberInput;
 
+    private TextInputLayout titleLayout;
+
+    private TextInputLayout authorLayout;
+
+    private TextInputLayout seriesInputLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +77,37 @@ public class AddBookActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Initializes the repository
+        mRepository = new Repository(getApplication());
+
+        // Sets the fields to their edit text fields
+        bookTitleInput = findViewById(R.id.book_title_input);
+        authorInput = findViewById(R.id.author_input);
+        bookGenreInput = findViewById(R.id.book_genre_input);
+        dateReadInput = findViewById(R.id.date_read_input);
+        seriesRadioGroup = findViewById(R.id.series_radio_group);
+        seriesYes = findViewById(R.id.series_yes);
+        seriesNo = findViewById(R.id.series_no);
+        seriesNameInput = findViewById(R.id.series_name_input);
+        seriesNumberInput = findViewById(R.id.series_number_input);
+
+        titleLayout = findViewById(R.id.book_title_input_layout);
+        authorLayout = findViewById(R.id.author_input_layout);
+        seriesInputLayout = findViewById(R.id.series_input_layout);
+
+
+        // Initialize save button
+        Button saveBookButton = findViewById(R.id.save_book_button);
+
+        // Set listener to trigger the submitBook method when clicked
+        saveBookButton.setOnClickListener(view -> addBook());
+
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Reading Recollections: Add Book");
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Sets dateReadInput to the edit text field
-        dateReadInput = findViewById(R.id.date_read_input);
 
         dateReadInput.setText("");
 
@@ -109,6 +142,101 @@ public class AddBookActivity extends AppCompatActivity {
             // Displays the datePicker created above
             datePickerDialog.show();
         });
+    }
+
+    // Adds book to database
+    private void addBook() {
+        // Takes the user input, converts it to a string, and removes extra spaces
+        String title = bookTitleInput.getText().toString().trim();
+        String authorFullName = authorInput.getText().toString().trim();
+        String genre = bookGenreInput.getText().toString().trim();
+        String dateRead = dateReadInput.getText().toString().trim();
+        String seriesName = seriesNameInput.getText().toString().trim();
+        String seriesNumber = seriesNumberInput.getText().toString().trim();
+
+        // Used to check validity of firstName and lastName
+        boolean isValid = true;
+
+        // Clears existing error messages
+        titleLayout.setError(null);
+        authorLayout.setError(null);
+        seriesInputLayout.setError(null);
+
+
+        // Validate book title
+        if (title.isEmpty()) {
+            titleLayout.setError("Please enter a book title");
+            isValid = false;
+        }
+
+        // Validate author
+        if (authorFullName.isEmpty()) {
+            authorLayout.setError("Please enter the author's name");
+            isValid = false;
+        }
+
+        if ((!seriesName.isEmpty() || !seriesNumber.isEmpty()) && seriesRadioGroup.getCheckedRadioButtonId() != R.id.series_yes) {
+            // If seriesName or seriesNumber is not empty, the "Yes" radio button must be selected
+            seriesInputLayout.setError("Series info below");
+            isValid = false;
+        }
+
+        // Creates book if inputs are valid
+        if (isValid) {
+            // Retrieve author and associate with book
+            mRepository.executor.execute(() -> {
+                // Lookup author by name to see if they exist in database
+                Author author = mRepository.getAuthorByName(authorFullName);
+
+                // If author is not found, prompt the user to add the author first
+                if (author == null) {
+                    runOnUiThread(() -> {
+                        authorLayout.setError("Author not found! Please add the author first.");
+                    });
+                    return;
+                }
+
+                // Create a new Book object
+                Book book = new Book();
+                book.setTitle(title);
+                // Link book to the author by ID
+                book.setAuthorId(author.getId());
+                book.setGenre(genre);
+
+                // Convert the dateRead (String) to LocalDate if it is not empty
+                if (!dateRead.isEmpty()) {
+                    LocalDate parsedDate = LocalDate.parse(dateRead, DateConverter.formatter); // Parsing the date from the string
+                    book.setDateRead(parsedDate);
+                }
+
+                // Handle series if selected
+                if (seriesRadioGroup.getCheckedRadioButtonId() == R.id.series_yes) {
+                    book.setSeries(true);
+                    book.setSeriesName(seriesNameInput.getText().toString().trim());
+                    book.setSeriesNumber(Integer.parseInt(seriesNumberInput.getText().toString().trim()));
+                }
+                else {
+                    book.setSeries(false);
+                }
+
+                // Insert book into database
+                mRepository.insertBook(book,
+                        () -> {
+                            // Success callback
+                            runOnUiThread(() -> {
+                                Toast.makeText(AddBookActivity.this, "Book saved to your library!", Toast.LENGTH_LONG).show();
+                                finish(); // Close the activity after successful save
+                            });
+                        },
+                        () -> {
+                            // Failure callback (in case something goes wrong)
+                            runOnUiThread(() -> {
+                                Toast.makeText(AddBookActivity.this, "Failed to add book.", Toast.LENGTH_LONG).show();
+                            });
+                        }
+                );
+            });
+        }
     }
 
     // Clicking the back button takes the user to the parent activity defined in Manifest
