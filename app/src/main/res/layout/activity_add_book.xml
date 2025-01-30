@@ -78,7 +78,8 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <!-- TextInputLayout wrapped around the AutoCompleteTextView for validation messages and prompts
+             AutoCompleteTextView will populate with author name suggestions from author table-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/author_input_layout"
             android:layout_width="0dp"
@@ -86,16 +87,18 @@
             android:layout_weight="1"
             android:layout_marginEnd="10dp"
             app:hintEnabled="true"
+            app:errorEnabled="true"
             android:paddingEnd="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/author_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Author Name"
                 android:textSize="20sp"
                 android:inputType="text"
-                android:gravity="end"/>
+                android:gravity="end"
+                android:completionThreshold="1"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 

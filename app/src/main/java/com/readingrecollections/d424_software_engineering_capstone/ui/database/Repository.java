@@ -3,6 +3,7 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.database;
 import android.app.Application;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -81,5 +82,10 @@ public class Repository {
     // Returns author whose name matches
     public Author getAuthorByName(String fullName) {
         return mAuthorDao.getAuthorByName(fullName);
+    }
+
+    // Returns a list of all author names
+    public List<String> getAllAuthorNames() {
+        return mAuthorDao.getAllAuthorNames();
     }
 }

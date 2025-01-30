@@ -2,6 +2,8 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.userinter
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,7 +25,9 @@ import com.readingrecollections.d424_software_engineering_capstone.ui.entities.B
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -34,7 +38,7 @@ public class AddBookActivity extends AppCompatActivity {
     private EditText bookTitleInput;
 
     // User input for author name
-    private EditText authorInput;
+    private AutoCompleteTextView authorInput;
 
     // User input for book genre
     private EditText bookGenreInput;
@@ -66,6 +70,12 @@ public class AddBookActivity extends AppCompatActivity {
 
     private TextInputLayout seriesInputLayout;
 
+    private ArrayAdapter<String> authorAdaptor;
+
+    private List<String> authorNames = new ArrayList<>();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +105,8 @@ public class AddBookActivity extends AppCompatActivity {
         authorLayout = findViewById(R.id.author_input_layout);
         seriesInputLayout = findViewById(R.id.series_input_layout);
 
+        // Loads authors from the database
+        loadAuthors();
 
         // Initialize save button
         Button saveBookButton = findViewById(R.id.save_book_button);
@@ -141,6 +153,29 @@ public class AddBookActivity extends AppCompatActivity {
 
             // Displays the datePicker created above
             datePickerDialog.show();
+        });
+    }
+
+    // Fetches authors from database for the authorInput suggestion
+    private void loadAuthors() {
+        mRepository.executor.execute(() -> {
+
+            // Fetches the authors from database
+            List<String> authors = mRepository.getAllAuthorNames();
+
+            // Returns to main thread for UI updates
+            runOnUiThread(() -> {
+                // Clears current list of authors
+                authorNames.clear();
+                // Adds retrieved authors to authorNames
+                authorNames.addAll(authors);
+
+                // Adapter attaches dropdown menu to authorNames
+                authorAdaptor = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, authorNames);
+
+                // Connects the adapter to the AutoCompleteTextView
+                authorInput.setAdapter(authorAdaptor);
+            });
         });
     }
 
@@ -212,8 +247,16 @@ public class AddBookActivity extends AppCompatActivity {
                 // Handle series if selected
                 if (seriesRadioGroup.getCheckedRadioButtonId() == R.id.series_yes) {
                     book.setSeries(true);
-                    book.setSeriesName(seriesNameInput.getText().toString().trim());
-                    book.setSeriesNumber(Integer.parseInt(seriesNumberInput.getText().toString().trim()));
+
+                    // If seriesName is not empty, sets seriesName to input
+                    if (!seriesName.isEmpty()) {
+                        book.setSeriesName(seriesNameInput.getText().toString().trim());
+                    }
+
+                    // If seriesNumber is not empty, sets seriesNumber to input
+                    if (!seriesNumber.isEmpty()) {
+                        book.setSeriesNumber(Integer.parseInt(seriesNumberInput.getText().toString().trim()));
+                    }
                 }
                 else {
                     book.setSeries(false);
