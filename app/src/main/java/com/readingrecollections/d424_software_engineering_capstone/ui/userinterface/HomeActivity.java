@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Reading Recollections: Home");
+            getSupportActionBar().setTitle("Home");
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

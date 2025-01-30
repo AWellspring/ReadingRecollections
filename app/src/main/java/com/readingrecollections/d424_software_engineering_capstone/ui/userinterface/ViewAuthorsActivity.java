@@ -52,7 +52,7 @@ public class ViewAuthorsActivity extends AppCompatActivity {
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Reading Recollections: View Authors");
+            getSupportActionBar().setTitle("View Authors");
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

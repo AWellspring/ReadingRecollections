@@ -116,7 +116,7 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Reading Recollections: Add Book");
+            getSupportActionBar().setTitle("Add Book");
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -71,7 +71,7 @@ public class AddAuthorActivity extends AppCompatActivity {
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Reading Recollections: Add Author");
+            getSupportActionBar().setTitle("Add Author");
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

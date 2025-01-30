@@ -28,7 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Reading Recollections: Welcome!");
+            getSupportActionBar().setTitle("Welcome!");
         }
 
         // Calls the welcome button from activity_welcome.xml
