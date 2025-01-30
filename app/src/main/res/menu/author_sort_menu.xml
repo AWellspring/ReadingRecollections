@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_first_name_asc"
+        android:title="Sort by First Name (A-Z)" />
+    <item
+        android:id="@+id/sort_first_name_desc"
+        android:title="Sort by First Name (Z-A)" />
+    <item
+        android:id="@+id/sort_last_name_asc"
+        android:title="Sort by Last Name (A-Z)" />
+    <item
+        android:id="@+id/sort_last_name_desc"
+        android:title="Sort by Last Name (Z-A)" />
+</menu>

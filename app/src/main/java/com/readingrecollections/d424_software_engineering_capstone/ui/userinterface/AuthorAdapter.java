@@ -21,10 +21,17 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     private List<Author> authors;
     private Context context;
 
+    private boolean isLastNameFirst = false;
+
     // Takes a list of authors and context, initializes the variables with this info
     public AuthorAdapter(List<Author> authors, Context context) {
         this.authors = authors;
         this.context = context;
+    }
+
+    public void setLastNameFirst(boolean isLastNameFirst) {
+        this.isLastNameFirst = isLastNameFirst;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,14 +47,30 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     public void onBindViewHolder(@NonNull AuthorViewHolder holder, int position) {
         // Retrieves the author at the specified position
         Author author = authors.get(position);
-        // Sets the text view to the author's full name
-        holder.textView.setText(author.getAuthorFullName());
 
-        //holder.itemView.setOnClickListener(v -> {
-            //Intent intent = new Intent(context, AuthorDetailActivity.class);
-            //intent.putExtra("AUTHOR_ID", author.getId());
-            //context.startActivity(intent);
-        //});
+        String formattedName;
+
+        if (isLastNameFirst) {
+            // Format as "LastName, FirstName MiddleName"
+            formattedName = author.getAuthorLastName();
+            if (!author.getAuthorFirstName().isEmpty()) {
+                formattedName += ", " + author.getAuthorFirstName();
+            }
+            if (!author.getAuthorMiddleName().isEmpty()) {
+                formattedName += " " + author.getAuthorMiddleName();
+            }
+        } else {
+            // Default "FirstName MiddleName LastName"
+            formattedName = author.getAuthorFirstName();
+            if (!author.getAuthorMiddleName().isEmpty()) {
+                formattedName += " " + author.getAuthorMiddleName();
+            }
+            if (!author.getAuthorLastName().isEmpty()) {
+                formattedName += " " + author.getAuthorLastName();
+            }
+        }
+
+        holder.textView.setText(formattedName);
     }
 
     // Returns how many authors are in the list
