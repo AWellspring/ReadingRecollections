@@ -42,6 +42,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Calls the view author button from activity_home.xml
+        Button buttonViewAuthors = findViewById(R.id.view_all_authors_button);
+
+        // Sets onClick to take the user to the ViewAuthorsActivity.xml page
+        buttonViewAuthors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ViewAuthorsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Calls the add book button from activity_home.xml
         Button buttonAddBook = findViewById(R.id.add_book_button);
 
@@ -56,12 +68,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Initializes a repository for managing data operations
         repository = new Repository(getApplication());
-
-        // A temporary button for inserting sample data
-        //Button searchButton = findViewById(R.id.search_button);
-        //searchButton.setOnClickListener(v -> {
-            //repository.insertSampleData();
-        //});
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
