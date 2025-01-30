@@ -88,4 +88,10 @@ public class Repository {
     public List<String> getAllAuthorNames() {
         return mAuthorDao.getAllAuthorNames();
     }
+
+    // Returns a list of all authors; accessed by the RecyclerView
+    // Will pass author information along to author details page
+    public List<Author> getAllAuthors() {
+        return mAuthorDao.getAllAuthors();
+    }
 }
