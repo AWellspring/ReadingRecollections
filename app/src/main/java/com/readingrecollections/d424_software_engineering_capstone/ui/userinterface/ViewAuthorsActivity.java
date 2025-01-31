@@ -1,9 +1,17 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -64,63 +72,130 @@ public class ViewAuthorsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    // Dropdown menu displaying sort options
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu with the "Sort by..." item
         getMenuInflater().inflate(R.menu.author_sort_menu, menu);
+        MenuItem sortItem = menu.findItem(R.id.action_sort_by);
+        if (sortItem != null) {
+            SpannableString spannable = new SpannableString(sortItem.getTitle());
+
+            // Set the font size and color
+            spannable.setSpan(new AbsoluteSizeSpan(18, true), 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Set font size
+            spannable.setSpan(new ForegroundColorSpan(Color.BLACK), 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Set color
+
+            // Applies styled title to the menu item
+            sortItem.setTitle(spannable);
+        }
         return true;
     }
 
+    // Create and show the PopupMenu with sort options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.sort_first_name_asc) {
-            sortAuthors(SortOption.FIRST_NAME_ASC);
+        if (id == R.id.action_sort_by) {
+            showSortOptions();
             return true;
-        } else if (id == R.id.sort_first_name_desc) {
-            sortAuthors(SortOption.FIRST_NAME_DESC);
-            return true;
-        } else if (id == R.id.sort_last_name_asc) {
-            sortAuthors(SortOption.LAST_NAME_ASC);
-            return true;
-        } else if (id == R.id.sort_last_name_desc) {
-            sortAuthors(SortOption.LAST_NAME_DESC);
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
+    // Displays the sort options in the Popup Menu
+    private void showSortOptions() {
+        // Get the view for the "Sort by..." item
+        View view = findViewById(R.id.action_sort_by); // ActionBar item
+        PopupMenu popupMenu = new PopupMenu(ViewAuthorsActivity.this, view);
+
+        // Create the menu items manually
+        Menu menu = popupMenu.getMenu();
+        int firstNameAsc = 1;
+        int firstNameDesc = 2;
+        int lastNameAsc = 3;
+        int lastNameDesc = 4;
+
+        // Sets text for each option
+        menu.add(Menu.NONE, firstNameAsc, Menu.NONE, "First Name (A-Z)");
+        menu.add(Menu.NONE, firstNameDesc, Menu.NONE, "First Name (Z-A)");
+        menu.add(Menu.NONE, lastNameAsc, Menu.NONE, "Last Name (A-Z)");
+        menu.add(Menu.NONE, lastNameDesc, Menu.NONE, "Last Name (Z-A)");
+
+        // Set the click listener for these menu items
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+
+            // Sort authors based on option chosen
+            if (itemId == firstNameAsc) {
+                sortAuthors(SortOption.FIRST_NAME_ASC);
+                return true;
+            }
+            else if (itemId == firstNameDesc) {
+                sortAuthors(SortOption.FIRST_NAME_DESC);
+                return true;
+            }
+            else if (itemId == lastNameAsc) {
+                sortAuthors(SortOption.LAST_NAME_ASC);
+                return true;
+            }
+            else if (itemId == lastNameDesc) {
+                sortAuthors(SortOption.LAST_NAME_DESC);
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+
+        // Show the popup menu
+        popupMenu.show();
+    }
+
+    // Defines the four sorting options
     private enum SortOption {
         FIRST_NAME_ASC, FIRST_NAME_DESC, LAST_NAME_ASC, LAST_NAME_DESC
     }
 
+    // Sorts the authors according to the chosen method
     private void sortAuthors(SortOption option) {
+        // Checks if author list is empty
         if (authorList == null || authorList.isEmpty()) return;
 
-        boolean isLastNameFirst = false; // Default to FirstName MiddleName LastName format
+        // Defaults to FirstName MiddleName LastName format
+        boolean isLastNameFirst = false;
 
+        // Checks the selected SortOption and sorts authors accordingly
         switch (option) {
+            // Sorts by first name A-Z
             case FIRST_NAME_ASC:
                 Collections.sort(authorList, Comparator.comparing(Author::getAuthorFirstName));
                 break;
+            // Sorts by first name Z-A
             case FIRST_NAME_DESC:
                 Collections.sort(authorList, Comparator.comparing(Author::getAuthorFirstName).reversed());
                 break;
+            // Sorts by last name A-Z
             case LAST_NAME_ASC:
                 Collections.sort(authorList, Comparator.comparing(Author::getAuthorLastName)
                         .thenComparing(Author::getAuthorFirstName));
-                isLastNameFirst = true; // Enable LastName, FirstName format
+                // Enables LastName, FirstName format
+                isLastNameFirst = true;
                 break;
+            // Sorts by last name Z-A
             case LAST_NAME_DESC:
                 Collections.sort(authorList, Comparator.comparing(Author::getAuthorLastName)
                         .thenComparing(Author::getAuthorFirstName, Comparator.reverseOrder()).reversed());
-                isLastNameFirst = true; // Enable LastName, FirstName format
+                // Enables LastName, FirstName format
+                isLastNameFirst = true;
                 break;
         }
 
+        // Tells the adapter if names are sorted by last name first
         adapter.setLastNameFirst(isLastNameFirst);
 
+        // Stores user sort option for future display of page
         SharedPreferences preferences = getSharedPreferences("author_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("sort_option", option.name());
@@ -145,10 +220,12 @@ public class ViewAuthorsActivity extends AppCompatActivity {
                 // Check if a preference exists
                 String sortOptionName = preferences.getString("sort_option", null);
 
+                // Checks to see if there's a user preference saved
                 SortOption sortOption;
                 if (sortOptionName != null) {
                     sortOption = SortOption.valueOf(sortOptionName);
-                } else {
+                }
+                else {
                     // No preference found, default to FIRST_NAME_ASC
                     sortOption = SortOption.FIRST_NAME_ASC;
                 }

@@ -29,6 +29,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
         this.context = context;
     }
 
+    // Sets whether user wants to sort by first name or last name
     public void setLastNameFirst(boolean isLastNameFirst) {
         this.isLastNameFirst = isLastNameFirst;
         notifyDataSetChanged();
@@ -48,8 +49,10 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
         // Retrieves the author at the specified position
         Author author = authors.get(position);
 
+        // Creates empty string to pass name format to
         String formattedName;
 
+        // If the user selects a view sorted by last name
         if (isLastNameFirst) {
             // Format as "LastName, FirstName MiddleName"
             formattedName = author.getAuthorLastName();
@@ -59,7 +62,9 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
             if (!author.getAuthorMiddleName().isEmpty()) {
                 formattedName += " " + author.getAuthorMiddleName();
             }
-        } else {
+        }
+        // If the user selects a view sorted by first name
+        else {
             // Default "FirstName MiddleName LastName"
             formattedName = author.getAuthorFirstName();
             if (!author.getAuthorMiddleName().isEmpty()) {
@@ -70,6 +75,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
             }
         }
 
+        // Displays the formatted author name
         holder.textView.setText(formattedName);
     }
 
