@@ -58,17 +58,17 @@
         android:background="@drawable/rounded_button"
         android:elevation="4dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/delete_author_button"
+        app:layout_constraintBottom_toTopOf="@id/add_book_by_author_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Button to delete author -->
     <Button
-        android:id="@+id/delete_author_button"
+        android:id="@+id/add_book_by_author_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Delete Author"
+        android:text="Add a Book"
         android:textSize="30sp"
         android:textAllCaps="false"
         android:background="@drawable/rounded_button"

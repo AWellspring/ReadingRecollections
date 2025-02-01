@@ -13,9 +13,12 @@
         android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="35">
         <activity
+            android:name=".ui.userinterface.EditAuthorActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.userinterface.AuthorDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".ui.userinterface.ViewAuthorsActivity"/>
+            android:parentActivityName=".ui.userinterface.ViewAuthorsActivity" />
         <activity
             android:name=".ui.userinterface.ViewAuthorsActivity"
             android:exported="false"

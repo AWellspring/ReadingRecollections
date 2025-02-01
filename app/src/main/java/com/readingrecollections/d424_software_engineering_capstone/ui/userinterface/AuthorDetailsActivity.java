@@ -3,6 +3,8 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.userinter
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -87,6 +89,19 @@ public class AuthorDetailsActivity extends AppCompatActivity {
             // Enables the back button in the Action Bar
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        // Calls the edit author button from activity_author_details.xml
+        Button buttonEditAuthor = findViewById(R.id.edit_author_button);
+
+        // Sets onClick to take the user to the EditAuthorActivity.xml page
+        buttonEditAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AuthorDetailsActivity.this, EditAuthorActivity.class);
+                intent.putExtra("author_name", authorName);
+                startActivity(intent);
+            }
+        });
     }
 
     // Activates when an book is clicked in the Recycler View

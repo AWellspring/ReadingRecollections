@@ -63,6 +63,12 @@ public class Repository {
         });
     }
 
+    public void updateAuthor(Author author) {
+        executor.execute(() -> {
+            mAuthorDao.update(author);
+        });
+    }
+
     public void insertBook(Book book, Runnable onSuccess, Runnable onFailure) {
         executor.execute(() -> {
             try {
