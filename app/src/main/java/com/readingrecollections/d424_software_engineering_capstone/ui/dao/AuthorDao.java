@@ -1,6 +1,7 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -19,6 +20,9 @@ public interface AuthorDao {
     // Updates the author in the database
     @Update
     void update(Author author);
+
+    @Delete
+    void delete(Author author);
 
     // Retrieves all rows from the author table
     @Query("SELECT * FROM author")

@@ -69,6 +69,12 @@ public class Repository {
         });
     }
 
+    public void deleteAuthor(Author author) {
+        executor.execute(() -> {
+            mAuthorDao.delete(author);
+        });
+    }
+
     public void insertBook(Book book, Runnable onSuccess, Runnable onFailure) {
         executor.execute(() -> {
             try {

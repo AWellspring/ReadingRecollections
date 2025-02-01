@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +17,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.readingrecollections.d424_software_engineering_capstone.R;
 import com.readingrecollections.d424_software_engineering_capstone.ui.database.Repository;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
+import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Book;
+
+import java.util.List;
 
 public class EditAuthorActivity extends AppCompatActivity {
 
@@ -102,6 +106,12 @@ public class EditAuthorActivity extends AppCompatActivity {
         // Sets listener to trigger the addAuthor method when clicked
         updateAuthorButton.setOnClickListener(view -> updateAuthor());
 
+        // Initializes the delete author button
+        Button deleteAuthorButton = findViewById(R.id.delete_author_button);
+
+        // Sets listener to trigger the deleteAuthor method when clicked
+        deleteAuthorButton.setOnClickListener(view -> deleteAuthor());
+
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Edit Author");
@@ -168,7 +178,7 @@ public class EditAuthorActivity extends AppCompatActivity {
 
                 // Returns to previous screen after update
                 runOnUiThread(() -> {
-                    Toast.makeText(EditAuthorActivity.this, "Author updated successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditAuthorActivity.this, "Author updated in your library!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(EditAuthorActivity.this, AuthorDetailsActivity.class);
                     // Passes the new authorName to the AuthorDetails page
                     intent.putExtra("author_name", authorName);
@@ -177,5 +187,61 @@ public class EditAuthorActivity extends AppCompatActivity {
                 });
             });
         }
+    }
+
+    // Checks to see if the user can delete the author
+    // Triggers a confirmation to make sure the user wants to delete the author
+    private void deleteAuthor() {
+        mRepository.executor.execute(() -> {
+            // Check if there are books associated with the author
+            List<Book> booksByAuthor = mRepository.getBooksByAuthor(author.getId());
+
+            // If books exist, trigger message saying the author cannot be deleted
+            if (!booksByAuthor.isEmpty()) {
+                runOnUiThread(() -> cannotDeleteDialog());
+            }
+            // If there are no books by author, trigger delete confirmation
+            else {
+                runOnUiThread(() -> deleteConfirmationDialog());
+            }
+        });
+    }
+
+    // Displays a pop up message saying the books cannot be deleted
+    // Explains that there are books by this author in the user's library
+    private void cannotDeleteDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cannot Delete")
+                .setMessage("You have books by this author in your library.")
+                // Dismisses dialog
+                .setPositiveButton("Go back", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    // Displays a pop up message verifying user wants to delete author
+    private void deleteConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Author")
+                .setMessage("Are you sure you want to delete this author?")
+                // Triggers the author deletion
+                .setPositiveButton("Delete", (dialog, which) -> confirmDeleteAuthor())
+                // Dismisses dialog
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    // Deletes author from the database upon user confirmation
+    private void confirmDeleteAuthor() {
+        mRepository.executor.execute(() -> {
+            mRepository.deleteAuthor(author);
+
+            // Return to View Authors page with success message
+            runOnUiThread(() -> {
+                Toast.makeText(EditAuthorActivity.this, "Author deleted from your library!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(EditAuthorActivity.this, ViewAuthorsActivity.class);
+                startActivity(intent);
+                finish();
+            });
+        });
     }
 }
