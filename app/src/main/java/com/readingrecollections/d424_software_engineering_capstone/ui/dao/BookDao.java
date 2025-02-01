@@ -18,4 +18,7 @@ public interface BookDao {
     // Retrieves all rows from the book table
     @Query("SELECT * FROM book")
     List<Book> getAllBooks();
+
+    @Query("SELECT * FROM Book WHERE authorId = :authorId")
+    List<Book> getBooksByAuthor(int authorId);
 }

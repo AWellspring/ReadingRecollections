@@ -84,6 +84,10 @@ public class Repository {
         return mAuthorDao.getAuthorByName(fullName);
     }
 
+    public int getAuthorIdByName(String fullName) {
+        return mAuthorDao.getAuthorIdByName(fullName);
+    }
+
     // Returns a list of all author names
     public List<String> getAllAuthorNames() {
         return mAuthorDao.getAllAuthorNames();
@@ -93,5 +97,9 @@ public class Repository {
     // Will pass author information along to author details page
     public List<Author> getAllAuthors() {
         return mAuthorDao.getAllAuthors();
+    }
+
+    public List<Book> getBooksByAuthor(int authorId) {
+        return mBookDao.getBooksByAuthor(authorId);
     }
 }
