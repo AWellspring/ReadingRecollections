@@ -20,13 +20,22 @@ import java.util.List;
 public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorViewHolder> {
     private List<Author> authors;
     private Context context;
-
     private boolean isLastNameFirst = false;
 
+    // Declares on click listener for when the user clicks an author name
+    private OnAuthorClickListener listener;
+
+    // Declares interface that requires implementing onAuthorClick
+    // The author which the user clicks is passed as a parameter
+    public interface OnAuthorClickListener {
+        void onAuthorClick(Author author);
+    }
+
     // Takes a list of authors and context, initializes the variables with this info
-    public AuthorAdapter(List<Author> authors, Context context) {
+    public AuthorAdapter(List<Author> authors, Context context, OnAuthorClickListener listener) {
         this.authors = authors;
         this.context = context;
+        this.listener = listener;
     }
 
     // Sets whether user wants to sort by first name or last name
@@ -40,7 +49,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     public AuthorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Calls item_author.xml for styling for the RecyclerView items
         View view = LayoutInflater.from(context).inflate(R.layout.item_author, parent, false);
-        return new AuthorViewHolder(view);
+        return new AuthorViewHolder(view, listener, authors);
     }
 
     // Binds data to an author based on position
@@ -77,6 +86,14 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
 
         // Displays the formatted author name
         holder.textView.setText(formattedName);
+
+        // Sets click listener for each author
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                // Passes the author to the onAuthorClick
+                listener.onAuthorClick(author);
+            }
+        });
     }
 
     // Returns how many authors are in the list
@@ -91,10 +108,19 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
         TextView textView;
 
         // Constructs the ViewHolder by initializing the itemView
-        AuthorViewHolder(View itemView) {
+        AuthorViewHolder(View itemView, OnAuthorClickListener listener, List<Author> authors) {
             super(itemView);
             // sets textView to the itemView
             textView = itemView.findViewById(R.id.author_name);
+
+            // Sets an onClickListener to the itemView
+            itemView.setOnClickListener(v -> {
+                // Ensures the listener is valid and the position is valid
+                if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    // Gets the author by the position in the adapter and triggers onAuthorClick
+                    listener.onAuthorClick(authors.get(getAdapterPosition()));
+                }
+            });
         }
     }
 }

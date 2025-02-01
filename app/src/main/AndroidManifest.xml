@@ -13,9 +13,13 @@
         android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="35">
         <activity
+            android:name=".ui.userinterface.AuthorDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.userinterface.ViewAuthorsActivity"/>
+        <activity
             android:name=".ui.userinterface.ViewAuthorsActivity"
             android:exported="false"
-            android:parentActivityName=".ui.userinterface.HomeActivity"/>
+            android:parentActivityName=".ui.userinterface.HomeActivity" />
         <activity
             android:name=".ui.userinterface.AddBookActivity"
             android:exported="false"

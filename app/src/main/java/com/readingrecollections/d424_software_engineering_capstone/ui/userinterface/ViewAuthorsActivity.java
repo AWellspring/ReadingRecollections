@@ -1,5 +1,6 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ViewAuthorsActivity extends AppCompatActivity {
+public class ViewAuthorsActivity extends AppCompatActivity implements AuthorAdapter.OnAuthorClickListener {
 
     // Declares variables
     private RecyclerView recyclerView;
@@ -70,6 +71,15 @@ public class ViewAuthorsActivity extends AppCompatActivity {
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    // Activates when an author is clicked in the Recycler View
+    // Passes the clicked author to the AuthorDetailsActivity.java
+    // Passes along the author name as author_name
+    public void onAuthorClick(Author author) {
+        Intent intent = new Intent(this, AuthorDetailsActivity.class);
+        intent.putExtra("author_name", author.getAuthorFullName());
+        startActivity(intent);
     }
 
     // Dropdown menu displaying sort options
@@ -211,7 +221,7 @@ public class ViewAuthorsActivity extends AppCompatActivity {
             // Returns to main thread for UI updates
             runOnUiThread(() -> {
                 // Creates Author Adapter
-                adapter = new AuthorAdapter(authorList, this);
+                adapter = new AuthorAdapter(authorList, this, this::onAuthorClick);
                 // Sets the adapter to the RecyclerView, displaying the author data
                 recyclerView.setAdapter(adapter);
 
