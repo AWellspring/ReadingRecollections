@@ -105,6 +105,11 @@ public class Repository {
         return mAuthorDao.getAllAuthorNames();
     }
 
+    // Returns a list of all series names
+    public List<String> getAllSeriesNames() {
+        return mBookDao.getAllSeriesNames();
+    }
+
     // Returns a list of all authors; accessed by the RecyclerView
     // Will pass author information along to author details page
     public List<Author> getAllAuthors() {

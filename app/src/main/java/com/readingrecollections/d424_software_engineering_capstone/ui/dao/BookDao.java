@@ -21,4 +21,10 @@ public interface BookDao {
 
     @Query("SELECT * FROM Book WHERE authorId = :authorId")
     List<Book> getBooksByAuthor(int authorId);
+
+    // Searches book table for all series names
+    // Returns list of series names, with each series only on the list once
+    // Does not return null
+    @Query("SELECT DISTINCT seriesName FROM book WHERE seriesName IS NOT NULL")
+    List<String> getAllSeriesNames();
 }

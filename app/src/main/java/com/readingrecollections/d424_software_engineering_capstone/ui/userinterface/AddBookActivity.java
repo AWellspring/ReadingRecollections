@@ -3,6 +3,7 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.userinter
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -60,7 +61,7 @@ public class AddBookActivity extends AppCompatActivity {
     private RadioButton seriesNo;
 
     // User input for series name
-    private EditText seriesNameInput;
+    private AutoCompleteTextView seriesNameInput;
 
     // User input for series book number
     private EditText seriesNumberInput;
@@ -73,7 +74,11 @@ public class AddBookActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> authorAdaptor;
 
+    private ArrayAdapter<String> seriesAdaptor;
+
     private List<String> authorNames = new ArrayList<>();
+
+    private List<String> seriesNames = new ArrayList<>();
 
     private String authorName;
 
@@ -134,6 +139,9 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Loads authors from the database
         loadAuthors();
+
+        // Loads series from the database
+        loadSeries();
 
         // Initialize save button
         Button saveBookButton = findViewById(R.id.save_book_button);
@@ -226,6 +234,29 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Connects the adapter to the AutoCompleteTextView
                 authorInput.setAdapter(authorAdaptor);
+            });
+        });
+    }
+
+    // Fetches series from database for the seriesInput suggestion
+    private void loadSeries() {
+        mRepository.executor.execute(() -> {
+
+            // Fetches the series from database
+            List<String> series = mRepository.getAllSeriesNames();
+
+            // Returns to main thread for UI updates
+            runOnUiThread(() -> {
+                // Clears current list of series
+                seriesNames.clear();
+                // Adds retrieved series to seriesNames
+                seriesNames.addAll(series);
+
+                // Adapter attaches dropdown menu to seriesNames
+                seriesAdaptor = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, seriesNames);
+
+                // Connects the adapter to the AutoCompleteTextView
+                seriesNameInput.setAdapter(seriesAdaptor);
             });
         });
     }
