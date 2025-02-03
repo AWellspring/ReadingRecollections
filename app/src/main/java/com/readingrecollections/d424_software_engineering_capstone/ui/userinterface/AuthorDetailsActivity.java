@@ -102,6 +102,19 @@ public class AuthorDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Calls the add book button from activity_author_details.xml
+        Button buttonAddBook = findViewById(R.id.add_book_by_author_button);
+
+        // Sets onClick to take the user to the activity_add_book.xml page
+        buttonAddBook.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(AuthorDetailsActivity.this, AddBookActivity.class);
+               intent.putExtra("author_name", authorName);
+               startActivity(intent);
+           }
+        });
     }
 
     // Activates when an book is clicked in the Recycler View

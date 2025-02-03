@@ -1,6 +1,7 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -74,7 +75,11 @@ public class AddBookActivity extends AppCompatActivity {
 
     private List<String> authorNames = new ArrayList<>();
 
+    private String authorName;
 
+    private Author author;
+
+    private String tempName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,28 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Initializes the repository
         mRepository = new Repository(getApplication());
+
+        // Passes author name from the intent on the Author Details page
+        tempName = getIntent().getStringExtra("author_name");
+
+        // If coming from the Author Details page
+        if (tempName != null) {
+            // Set authorName to the intent
+            authorName = getIntent().getStringExtra("author_name");
+
+            mRepository.executor.execute(() -> {
+                        // Calls author from database by authorName
+                        author = mRepository.getAuthorByName(authorName);
+
+                        runOnUiThread(() -> {
+                            // Sets the input text to the author's first name
+                            if (author.getAuthorFullName() != null) {
+                                authorInput.setText(author.getAuthorFullName());
+                            }
+                        });
+                    });
+        }
+
 
         // Sets the fields to their edit text fields
         bookTitleInput = findViewById(R.id.book_title_input);
@@ -154,6 +181,30 @@ public class AddBookActivity extends AppCompatActivity {
             // Displays the datePicker created above
             datePickerDialog.show();
         });
+    }
+
+    // Overrides the back button so that the authorName can be passed
+    // If the user came from the AuthorDetails page, they are returned there
+    // Otherwise, they are returned to the Home page
+    @Override
+    public boolean onSupportNavigateUp() {
+        // If coming from the Author Details page
+        if (tempName != null) {
+            // Create an intent to go back to AuthorDetailsActivity
+            Intent intent = new Intent(AddBookActivity.this, AuthorDetailsActivity.class);
+            // Pass the author name
+            intent.putExtra("author_name", authorName);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        // If coming from the Home page
+        else {
+            Intent intent = new Intent(AddBookActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
     }
 
     // Fetches authors from database for the authorInput suggestion
@@ -267,8 +318,22 @@ public class AddBookActivity extends AppCompatActivity {
                         () -> {
                             // Success callback
                             runOnUiThread(() -> {
-                                Toast.makeText(AddBookActivity.this, "Book saved to your library!", Toast.LENGTH_LONG).show();
-                                finish(); // Close the activity after successful save
+                                Toast.makeText(AddBookActivity.this, title + " saved to your library!", Toast.LENGTH_LONG).show();
+                                // If coming from the Author Details page
+                                if (tempName != null) {
+                                    // Create an intent to go back to AuthorDetailsActivity
+                                    Intent intent = new Intent(AddBookActivity.this, AuthorDetailsActivity.class);
+                                    // Pass the author name
+                                    intent.putExtra("author_name", authorName);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                // Otherwise, returns user to the Home page
+                                else {
+                                    Intent intent = new Intent(AddBookActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             });
                         },
                         () -> {
