@@ -212,7 +212,7 @@ public class EditAuthorActivity extends AppCompatActivity {
     private void cannotDeleteDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Cannot Delete")
-                .setMessage("You have books by this author in your library.")
+                .setMessage("You have books by " + authorName + " in your library.")
                 // Dismisses dialog
                 .setPositiveButton("Go back", (dialog, which) -> dialog.dismiss())
                 .show();
@@ -222,7 +222,7 @@ public class EditAuthorActivity extends AppCompatActivity {
     private void deleteConfirmationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Delete Author")
-                .setMessage("Are you sure you want to delete this author?")
+                .setMessage("Are you sure you want to delete " + authorName + " from your library?")
                 // Triggers the author deletion
                 .setPositiveButton("Delete", (dialog, which) -> confirmDeleteAuthor())
                 // Dismisses dialog
