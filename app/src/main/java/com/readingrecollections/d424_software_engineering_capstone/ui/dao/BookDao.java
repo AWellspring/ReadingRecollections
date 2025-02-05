@@ -27,4 +27,10 @@ public interface BookDao {
     // Does not return null
     @Query("SELECT DISTINCT seriesName FROM book WHERE seriesName IS NOT NULL")
     List<String> getAllSeriesNames();
+
+    // Searches book table for all genres
+    // Returns list of genres, with each genre only on the list once
+    // Does not return null
+    @Query("SELECT DISTINCT genre FROM book WHERE genre IS NOT NULL")
+    List<String> getAllGenres();
 }

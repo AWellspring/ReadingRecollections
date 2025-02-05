@@ -122,7 +122,7 @@ public class AddAuthorActivity extends AppCompatActivity {
                             // Author does not exist in database
                             // Author is saved, success Toast is displayed
                             runOnUiThread(() -> {
-                                Toast.makeText(AddAuthorActivity.this, "Author saved to your library!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddAuthorActivity.this, author.getAuthorFullName() + " saved to your library!", Toast.LENGTH_LONG).show();
                                 finish();
                             });
                         },
@@ -130,7 +130,7 @@ public class AddAuthorActivity extends AppCompatActivity {
                             // Author already exists in database
                             // Author is not saved, Toast is displayed
                             runOnUiThread(() -> {
-                                Toast.makeText(AddAuthorActivity.this, "Author already in your library.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddAuthorActivity.this, author.getAuthorFullName() + " is already in your library.", Toast.LENGTH_LONG).show();
                             });
                         });
             });

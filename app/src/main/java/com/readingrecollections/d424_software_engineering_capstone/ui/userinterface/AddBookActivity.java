@@ -43,7 +43,7 @@ public class AddBookActivity extends AppCompatActivity {
     private AutoCompleteTextView authorInput;
 
     // User input for book genre
-    private EditText bookGenreInput;
+    private AutoCompleteTextView bookGenreInput;
 
     // User input for date read
     private EditText dateReadInput;
@@ -76,9 +76,13 @@ public class AddBookActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> seriesAdaptor;
 
+    private ArrayAdapter<String> genreAdaptor;
+
     private List<String> authorNames = new ArrayList<>();
 
     private List<String> seriesNames = new ArrayList<>();
+
+    private List<String> bookGenres = new ArrayList<>();
 
     private String authorName;
 
@@ -142,6 +146,9 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Loads series from the database
         loadSeries();
+
+        // Loads genres from the database
+        loadGenres();
 
         // Initialize save button
         Button saveBookButton = findViewById(R.id.save_book_button);
@@ -257,6 +264,29 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Connects the adapter to the AutoCompleteTextView
                 seriesNameInput.setAdapter(seriesAdaptor);
+            });
+        });
+    }
+
+    // Fetches genres from database for the genreInput suggestion
+    private void loadGenres() {
+        mRepository.executor.execute(() -> {
+
+            // Fetches the genres from database
+            List<String> genres = mRepository.getAllGenres();
+
+            // Returns to main thread for UI updates
+            runOnUiThread(() -> {
+                // Clears current list of genres
+                bookGenres.clear();
+                // Adds retrieved genres to bookGenres
+                bookGenres.addAll(genres);
+
+                // Adapter attaches dropdown menu to bookGenres
+                genreAdaptor = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, bookGenres);
+
+                // Connects the adapter to the AutoCompleteTextView
+                bookGenreInput.setAdapter(genreAdaptor);
             });
         });
     }

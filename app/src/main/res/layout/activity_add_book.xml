@@ -121,7 +121,8 @@
             android:textColor="@color/black"
             android:padding="10dp"/>
 
-        <!-- TextInputLayout wrapped around the EditText for validation messages and prompts -->
+        <!-- TextInputLayout wrapped around the AutoCompleteTextView for validation messages and prompts
+             AutoCompleteTextView will populate with genre suggestions from book table-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/book_genre_input_layout"
             android:layout_width="0dp"
@@ -131,14 +132,15 @@
             app:hintEnabled="true"
             android:paddingEnd="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/book_genre_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Genre (Optional)"
                 android:textSize="20sp"
                 android:inputType="text"
-                android:gravity="end"/>
+                android:gravity="end"
+                android:completionThreshold="1"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
