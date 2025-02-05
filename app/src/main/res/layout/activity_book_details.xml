@@ -37,4 +37,230 @@
             android:padding="20dp"/>
     </LinearLayout>
 
+    <!-- ConstraintLayout with a TextView containing the book's author inside -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/book_author_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/book_title_field"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/label_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author: "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Text set to blank, will be populated in Java if the user added the information
+            during the book creation. -->
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_author"
+            app:layout_constraintBottom_toBottomOf="@id/label_author"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ConstraintLayout with a TextView containing the book's genre inside -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/book_genre_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/book_author_field"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/label_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genre: "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Text set to blank, will be populated in Java if the user added the information
+            during the book creation. -->
+        <TextView
+            android:id="@+id/book_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_genre"
+            app:layout_constraintBottom_toBottomOf="@id/label_genre"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ConstraintLayout with a TextView containing the book's date read inside -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/date_read_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/book_genre_field"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/label_date_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Read: "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Text set to blank, will be populated in Java if the user added the information
+            during the book creation. -->
+        <TextView
+            android:id="@+id/date_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_date_read"
+            app:layout_constraintBottom_toBottomOf="@id/label_date_read"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ConstraintLayout with a TextView containing the is series inside -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/is_series_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/date_read_field"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/label_is_series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Series: "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Text set to blank, will be populated in Java if the user added the information
+            during the book creation. -->
+        <TextView
+            android:id="@+id/is_series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_is_series"
+            app:layout_constraintBottom_toBottomOf="@id/label_is_series"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ConstraintLayout with a TextView containing the series name inside -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/series_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/is_series_field"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/label_series_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Series Name: "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Text set to blank, will be populated in Java if the user added the information
+            during the book creation. -->
+        <TextView
+            android:id="@+id/series_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_series_name"
+            app:layout_constraintBottom_toBottomOf="@id/label_series_name"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ConstraintLayout with a TextView containing the series number inside -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/series_number_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/series_name_field"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/label_series_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Number: "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Text set to blank, will be populated in Java if the user added the information
+            during the book creation. -->
+        <TextView
+            android:id="@+id/series_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_series_number"
+            app:layout_constraintBottom_toBottomOf="@id/label_series_number"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Button to edit book -->
+    <Button
+        android:id="@+id/edit_book_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Edit Book"
+        android:textSize="30sp"
+        android:textAllCaps="false"
+        android:background="@drawable/rounded_button"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
