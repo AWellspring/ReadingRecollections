@@ -118,11 +118,12 @@ public class AuthorDetailsActivity extends AppCompatActivity {
     }
 
     // Activates when an book is clicked in the Recycler View
-    // Passes the clicked book to the AuthorDetailsActivity.java - TEMPORARY
+    // Passes the clicked book to the BookDetailsActivity.java
     // Passes along the book title as book_title
     public void onBookClick(Book book) {
-        Intent intent = new Intent(this, AuthorDetailsActivity.class);
+        Intent intent = new Intent(this, BookDetailsActivity.class);
         intent.putExtra("book_title", book.getTitle());
+        intent.putExtra("author_name", authorName);
         startActivity(intent);
     }
 

@@ -124,4 +124,9 @@ public class Repository {
     public List<Book> getBooksByAuthor(int authorId) {
         return mBookDao.getBooksByAuthor(authorId);
     }
+
+    // Returns the book which matches the title and author id
+    public Book getBookByTitleAndAuthor(String bookTitle, int authorId) {
+        return mBookDao.getBookByTitleAndAuthor(bookTitle, authorId);
+    }
 }

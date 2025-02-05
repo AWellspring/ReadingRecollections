@@ -33,4 +33,9 @@ public interface BookDao {
     // Does not return null
     @Query("SELECT DISTINCT genre FROM book WHERE genre IS NOT NULL")
     List<String> getAllGenres();
+
+    // Searches book table for book with matching title and author id
+    // Returns book
+    @Query("SELECT * FROM book WHERE title = :bookTitle AND authorId = :authorId")
+    Book getBookByTitleAndAuthor(String bookTitle, int authorId);
 }
