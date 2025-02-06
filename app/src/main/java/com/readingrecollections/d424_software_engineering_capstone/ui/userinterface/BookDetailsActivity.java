@@ -1,6 +1,9 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -102,5 +105,27 @@ public class BookDetailsActivity extends AppCompatActivity {
                 });
             });
         }
+
+        // Sets the Action Bar title
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Book Details");
+            // Enables the back button in the Action Bar
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Calls the edit book button from activity_book_details.xml
+        Button buttonEditBook = findViewById(R.id.edit_book_button);
+
+        // Sets onClick to take the user to the EditBookActivity.xml page
+        buttonEditBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BookDetailsActivity.this, EditBookActivity.class);
+                intent.putExtra("author_name", authorName);
+                intent.putExtra("book_title", bookTitle);
+                intent.putExtra("from_author", authorName);
+                startActivity(intent);
+            }
+        });
     }
 }
