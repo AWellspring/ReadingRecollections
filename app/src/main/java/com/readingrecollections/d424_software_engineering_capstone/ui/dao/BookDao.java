@@ -1,11 +1,14 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
+import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Book;
 
 @Dao
@@ -14,6 +17,13 @@ public interface BookDao {
     // Inserts the book into the database
     @Insert
     void insert(Book book);
+
+    // Updates the book in the database
+    @Update
+    void update(Book book);
+
+    @Delete
+    void delete(Book book);
 
     // Retrieves all rows from the book table
     @Query("SELECT * FROM book")

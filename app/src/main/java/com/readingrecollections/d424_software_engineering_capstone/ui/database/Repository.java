@@ -91,6 +91,18 @@ public class Repository {
         });
     }
 
+    public void updateBook(Book book) {
+        executor.execute(() -> {
+            mBookDao.update(book);
+        });
+    }
+
+    public void deleteBook(Book book) {
+        executor.execute(() -> {
+            mBookDao.delete(book);
+        });
+    }
+
     // Returns author whose name matches
     public Author getAuthorByName(String fullName) {
         return mAuthorDao.getAuthorByName(fullName);
@@ -128,5 +140,9 @@ public class Repository {
     // Returns the book which matches the title and author id
     public Book getBookByTitleAndAuthor(String bookTitle, int authorId) {
         return mBookDao.getBookByTitleAndAuthor(bookTitle, authorId);
+    }
+
+    public String getAuthorNameById(int authorId) {
+        return mAuthorDao.getAuthorNameById(authorId);
     }
 }

@@ -40,6 +40,9 @@ public interface AuthorDao {
     @Query("SELECT * FROM author WHERE id = :authorId")
     Author getAuthorById(int authorId);
 
+    @Query("SELECT authorFullName FROM author WHERE id = :authorId")
+    String getAuthorNameById(int authorId);
+
     // Searches author table for all author names, returns list of all author names
     @Query("SELECT authorFullName FROM author")
     List<String> getAllAuthorNames();

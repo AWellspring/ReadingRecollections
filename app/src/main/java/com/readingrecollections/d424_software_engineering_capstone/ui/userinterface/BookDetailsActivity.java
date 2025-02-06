@@ -128,4 +128,17 @@ public class BookDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Overrides the back button so that the authorName and bookTitle can be passed
+    // This allows the user to go back to the Book Details they were just on
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Create an intent to go back to AuthorDetailsActivity
+        Intent intent = new Intent(BookDetailsActivity.this, AuthorDetailsActivity.class);
+        // Pass the author name and book title
+        intent.putExtra("author_name", authorName);
+        startActivity(intent);
+        finish();
+        return true;
+    }
 }
