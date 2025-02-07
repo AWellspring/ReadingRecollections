@@ -66,6 +66,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Calls the view all books button from activity_home.xml
+        Button buttonViewBooks = findViewById(R.id.view_all_books_button);
+
+        // Sets onClick to take the user to the ViewBooksActivity.xml page
+        buttonViewBooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ViewBooksActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Initializes a repository for managing data operations
         repository = new Repository(getApplication());
 

@@ -117,6 +117,11 @@ public class Repository {
         return mAuthorDao.getAllAuthorNames();
     }
 
+    // Returns a list of all books
+    public List<Book> getAllBooks() {
+        return mBookDao.getAllBooks();
+    }
+
     // Returns a list of all series names
     public List<String> getAllSeriesNames() {
         return mBookDao.getAllSeriesNames();
