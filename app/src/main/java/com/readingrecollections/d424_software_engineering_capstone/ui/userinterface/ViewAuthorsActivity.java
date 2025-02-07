@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.PopupMenu;
 
 import androidx.activity.EdgeToEdge;
@@ -71,6 +72,20 @@ public class ViewAuthorsActivity extends AppCompatActivity implements AuthorAdap
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Calls the add author button from activity_view_authors.xml
+        Button addAuthorButton = findViewById(R.id.add_author_button);
+
+        // Sets onClick to take the user to the AddAuthorActivity page
+        addAuthorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fromPage = "View Authors";
+                Intent intent = new Intent(ViewAuthorsActivity.this, AddAuthorActivity.class);
+                intent.putExtra("view_authors", fromPage);
+                startActivity(intent);
+            }
+        });
     }
 
     // Activates when an author is clicked in the Recycler View

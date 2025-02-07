@@ -1,5 +1,6 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,8 @@ public class AddAuthorActivity extends AppCompatActivity {
 
     private TextInputLayout lastNameLayout;
 
+    private String fromPage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,8 @@ public class AddAuthorActivity extends AppCompatActivity {
         // Sets lastNameLayout to the layout field
         lastNameLayout = findViewById(R.id.author_last_name_input_layout);
 
+        fromPage = getIntent().getStringExtra("view_authors");
+
         // Initializes the save author button
         Button saveAuthorButton = findViewById(R.id.save_author_button);
 
@@ -75,6 +80,27 @@ public class AddAuthorActivity extends AppCompatActivity {
         }
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    // Overrides the back button to check if an intent was passed
+    // If it was, the user came from the ViewAuthors page and is returned there
+    // If not, the user came from the Home page and is returned there
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (fromPage != null) {
+            // Create an intent to go back to ViewAuthorsActivity
+            Intent intent = new Intent(AddAuthorActivity.this, ViewAuthorsActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        else {
+            // Create an intent to go back to HomeActivity
+            Intent intent = new Intent(AddAuthorActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
     }
 
     // Adds author to database
@@ -123,7 +149,18 @@ public class AddAuthorActivity extends AppCompatActivity {
                             // Author is saved, success Toast is displayed
                             runOnUiThread(() -> {
                                 Toast.makeText(AddAuthorActivity.this, author.getAuthorFullName() + " saved to your library!", Toast.LENGTH_LONG).show();
-                                finish();
+                                if (fromPage != null) {
+                                    // Returns the user to ViewAuthorsActivity
+                                    Intent intent = new Intent(AddAuthorActivity.this, ViewAuthorsActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    // Returns the user to HomeActivity
+                                    Intent intent = new Intent(AddAuthorActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             });
                         },
                         () -> {
