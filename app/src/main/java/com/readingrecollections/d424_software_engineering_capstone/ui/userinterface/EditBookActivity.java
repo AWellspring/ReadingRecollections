@@ -409,7 +409,7 @@ public class EditBookActivity extends AppCompatActivity {
 
                     bookTitle = book.getTitle();
                     authorName = mRepository.getAuthorNameById(book.getAuthorId());
-                    // Create an intent to go back to AuthorDetailsActivity
+                    // Create an intent to go back to BookDetailsActivity
                     Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
                     // Pass the author name and book title
                     intent.putExtra("author_name", authorName);
@@ -445,10 +445,18 @@ public class EditBookActivity extends AppCompatActivity {
             // Return to Author Details page with success message
             runOnUiThread(() -> {
                 Toast.makeText(EditBookActivity.this, "Book deleted from your library!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(EditBookActivity.this, AuthorDetailsActivity.class);
-                intent.putExtra("author_name", authorName);
-                startActivity(intent);
-                finish();
+                if (fromPage !=  null) {
+                    Intent intent = new Intent(EditBookActivity.this, ViewBooksActivity.class);
+                    intent.putExtra("from_page", fromPage);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(EditBookActivity.this, AuthorDetailsActivity.class);
+                    intent.putExtra("author_name", authorName);
+                    startActivity(intent);
+                    finish();
+                }
             });
         });
     }
