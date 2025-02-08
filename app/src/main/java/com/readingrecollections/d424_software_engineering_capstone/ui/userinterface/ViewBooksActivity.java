@@ -70,10 +70,16 @@ public class ViewBooksActivity extends AppCompatActivity {
     // Passes the clicked book to the BookDetailsActivity.java
     // Passes along the book title as book_title
     public void onBookClick(Book book) {
-        Intent intent = new Intent(this, BookDetailsActivity.class);
-        intent.putExtra("book_title", book.getTitle());
-        //intent.putExtra("author_name", authorName);
-        startActivity(intent);
+        mRepository.executor.execute(() -> {
+            int authorId = book.getAuthorId();
+            String authorName = mRepository.getAuthorNameById(authorId);
+            String fromPage = "ViewBooks";
+            Intent intent = new Intent(this, BookDetailsActivity.class);
+            intent.putExtra("book_title", book.getTitle());
+            intent.putExtra("author_name", authorName);
+            intent.putExtra("from_page", fromPage);
+            startActivity(intent);
+        });
     }
 
     // Method to fetch book titles from the repository and display them

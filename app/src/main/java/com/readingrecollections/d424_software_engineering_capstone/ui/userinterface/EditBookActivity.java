@@ -94,6 +94,8 @@ public class EditBookActivity extends AppCompatActivity {
 
     private Book book;
 
+    private String fromPage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +139,9 @@ public class EditBookActivity extends AppCompatActivity {
 
         // Passes book title from the intent on the previous page
         bookTitle = getIntent().getStringExtra("book_title");
+
+        // Passes fromPage from the intent to determine previous page
+        fromPage = getIntent().getStringExtra("from_page");
 
         // Initialize update button
         Button updateBookButton = findViewById(R.id.update_book_button);
@@ -224,18 +229,32 @@ public class EditBookActivity extends AppCompatActivity {
         }
     }
 
-    // Overrides the back button so that the authorName and bookTitle can be passed
-    // This allows the user to go back to the Book Details they were just on
+    // Overrides the back button
+    // Checks if the fromPage String is populated
+    // If it is, the user came from BookDetails from ViewAllBooks
+    // fromPage will be passed as an intent
+    // If it isn't, the user came from BookDetails from AuthorDetails
     @Override
     public boolean onSupportNavigateUp() {
-        // Create an intent to go back to AuthorDetailsActivity
-        Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
-        // Pass the author name and book title
-        intent.putExtra("author_name", authorName);
-        intent.putExtra("book_title", bookTitle);
-        startActivity(intent);
-        finish();
-        return true;
+        if (fromPage != null) {
+            Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
+            // Pass the author name and book title
+            intent.putExtra("author_name", authorName);
+            intent.putExtra("book_title", bookTitle);
+            intent.putExtra("from_page", fromPage);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        else{
+            Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
+            // Pass the author name and book title
+            intent.putExtra("author_name", authorName);
+            intent.putExtra("book_title", bookTitle);
+            startActivity(intent);
+            finish();
+            return true;
+        }
     }
 
     // Fetches authors from database for the authorInput suggestion
@@ -395,6 +414,9 @@ public class EditBookActivity extends AppCompatActivity {
                     // Pass the author name and book title
                     intent.putExtra("author_name", authorName);
                     intent.putExtra("book_title", bookTitle);
+                    if (fromPage != null) {
+                        intent.putExtra("from_page", fromPage);
+                    }
                     startActivity(intent);
                     finish();
                 });

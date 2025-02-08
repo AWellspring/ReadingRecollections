@@ -44,6 +44,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private Book book;
 
+    private String fromPage;
+
     private DateConverter dateConverter = new DateConverter();
 
     @Override
@@ -74,6 +76,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         // Passes the author name from the intent on the previous page
         authorName = getIntent().getStringExtra("author_name");
+
+        // Passes the fromPage from the intent on the ViewBooksActivity
+        fromPage = getIntent().getStringExtra("from_page");
 
         // Sets the TextView text to bookTitle
         bookTitleView.setText(bookTitle);
@@ -120,25 +125,44 @@ public class BookDetailsActivity extends AppCompatActivity {
         buttonEditBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BookDetailsActivity.this, EditBookActivity.class);
-                intent.putExtra("author_name", authorName);
-                intent.putExtra("book_title", bookTitle);
-                intent.putExtra("from_author", authorName);
-                startActivity(intent);
+                if (fromPage != null) {
+                    Intent intent = new Intent(BookDetailsActivity.this, EditBookActivity.class);
+                    intent.putExtra("author_name", authorName);
+                    intent.putExtra("book_title", bookTitle);
+                    intent.putExtra("from_author", authorName);
+                    intent.putExtra("from_page", fromPage);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(BookDetailsActivity.this, EditBookActivity.class);
+                    intent.putExtra("author_name", authorName);
+                    intent.putExtra("book_title", bookTitle);
+                    intent.putExtra("from_author", authorName);
+                    startActivity(intent);
+                }
             }
         });
     }
 
-    // Overrides the back button so that the authorName and bookTitle can be passed
-    // This allows the user to go back to the Book Details they were just on
+    // Overrides the back button
+    // Checks if the fromPage String is populated
+    // If it is, the user came from ViewBooks and will be returned there
+    // If it isn't, the user came from AuthorDetails and will be returned there with an intent
     @Override
     public boolean onSupportNavigateUp() {
-        // Create an intent to go back to AuthorDetailsActivity
-        Intent intent = new Intent(BookDetailsActivity.this, AuthorDetailsActivity.class);
-        // Pass the author name and book title
-        intent.putExtra("author_name", authorName);
-        startActivity(intent);
-        finish();
-        return true;
+        if (fromPage != null) {
+            Intent intent = new Intent(BookDetailsActivity.this, ViewBooksActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        else {
+            Intent intent = new Intent(BookDetailsActivity.this, AuthorDetailsActivity.class);
+            // Pass the author name and book title
+            intent.putExtra("author_name", authorName);
+            startActivity(intent);
+            finish();
+            return true;
+        }
     }
 }
