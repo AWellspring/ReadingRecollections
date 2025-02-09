@@ -48,4 +48,7 @@ public interface BookDao {
     // Returns book
     @Query("SELECT * FROM book WHERE title = :bookTitle AND authorId = :authorId")
     Book getBookByTitleAndAuthor(String bookTitle, int authorId);
+
+    @Query("SELECT * FROM book ORDER BY authorId, title")
+    List<Book> getBooksGroupedByAuthor();
 }

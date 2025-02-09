@@ -9,12 +9,13 @@ import androidx.room.TypeConverters;
 import java.time.LocalDate;
 
 import com.readingrecollections.d424_software_engineering_capstone.ui.database.DateConverter;
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.Item;
 
 @Entity(foreignKeys = @ForeignKey(entity = Author.class,
         parentColumns = "id",
         childColumns = "authorId",
         onDelete = ForeignKey.CASCADE))
-public class Book {
+public class Book implements Item {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;

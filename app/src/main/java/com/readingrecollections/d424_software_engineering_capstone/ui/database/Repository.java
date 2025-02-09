@@ -3,14 +3,17 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.database;
 import android.app.Application;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import com.readingrecollections.d424_software_engineering_capstone.ui.dao.AuthorDao;
 import com.readingrecollections.d424_software_engineering_capstone.ui.dao.BookDao;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Book;
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.Item;
 
 // Manages operations between the UI and the database
 public class Repository {
@@ -149,5 +152,29 @@ public class Repository {
 
     public String getAuthorNameById(int authorId) {
         return mAuthorDao.getAuthorNameById(authorId);
+    }
+
+    public List<Book> getBooksGroupedByAuthor() {
+        return mBookDao.getBooksGroupedByAuthor();
+    }
+
+    public void getItemsGroupedByAuthor(Consumer<List<Item>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Book> bookList = mBookDao.getBooksGroupedByAuthor();
+            List<Item> itemList = new ArrayList<>();
+            int lastAuthorId = -1;
+
+            for (Book book : bookList) {
+                if (book.getAuthorId() != lastAuthorId) {
+                    // Fetch author details
+                    Author author = mAuthorDao.getAuthorById(book.getAuthorId());
+                    itemList.add(author); // Add author as header
+                    lastAuthorId = book.getAuthorId();
+                }
+                itemList.add(book); // Add book under the correct author
+            }
+
+            callback.accept(itemList); // Pass the data back to the caller
+        });
     }
 }

@@ -3,8 +3,10 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.Item;
+
 @Entity(tableName = "author")
-public class Author {
+public class Author implements Item {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String authorFirstName;

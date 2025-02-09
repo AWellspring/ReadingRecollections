@@ -33,7 +33,7 @@ public class ViewBooksActivity extends AppCompatActivity {
 
     // Declares variables
     private RecyclerView recyclerView;
-    private BookAdapter adapter;
+    private ItemAdapter adapter;
     private Repository mRepository;
 
     // Initializes new blank ArrayList
@@ -55,6 +55,9 @@ public class ViewBooksActivity extends AppCompatActivity {
 
         // Sets LinearLayoutManager to display recyclerView in a vertical list
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new ItemAdapter(this, this::onBookClick);
+        recyclerView.setAdapter(adapter);
 
         // Initializes repository
         mRepository = new Repository(getApplication());
@@ -94,13 +97,9 @@ public class ViewBooksActivity extends AppCompatActivity {
 
     // Method to fetch book titles from the repository and display them
     private void loadBooks() {
-        mRepository.executor.execute(() -> {
-            // Returns to main thread for UI updates
+        mRepository.getItemsGroupedByAuthor(items -> {
             runOnUiThread(() -> {
-                // Creates Book Adapter
-                BookAdapter adapter = new BookAdapter(bookList, this, this::onBookClick);
-                // Sets the adapter to the RecyclerView, displaying the author data
-                recyclerView.setAdapter(adapter);
+                adapter.setItems(items);
             });
         });
     }
