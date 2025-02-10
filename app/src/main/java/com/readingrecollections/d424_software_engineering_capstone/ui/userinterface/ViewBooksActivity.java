@@ -79,6 +79,101 @@ public class ViewBooksActivity extends AppCompatActivity {
         }
     }
 
+    // Dropdown menu displaying sort options
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu with the "Sort by..." item
+        getMenuInflater().inflate(R.menu.author_sort_menu, menu);
+        MenuItem sortItem = menu.findItem(R.id.action_sort_by);
+        if (sortItem != null) {
+            SpannableString spannable = new SpannableString(sortItem.getTitle());
+
+            // Set the font size and color
+            spannable.setSpan(new AbsoluteSizeSpan(18, true), 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Set font size
+            spannable.setSpan(new ForegroundColorSpan(Color.BLACK), 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Set color
+
+            // Applies styled title to the menu item
+            sortItem.setTitle(spannable);
+        }
+        return true;
+    }
+
+    // Create and show the PopupMenu with sort options
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_sort_by) {
+            showSortOptions();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Displays the sort options in the Popup Menu
+    private void showSortOptions() {
+        // Get the view for the "Sort by..." item
+        View view = findViewById(R.id.action_sort_by); // ActionBar item
+        PopupMenu popupMenu = new PopupMenu(ViewBooksActivity.this, view);
+
+        // Create the menu items manually
+        Menu menu = popupMenu.getMenu();
+        int titleAsc = 1;
+        int titleDesc = 2;
+        int authorNameAsc = 3;
+        int authorNameDesc = 4;
+        int genreSort = 5;
+        int seriesSort = 6;
+        int dateRead = 7;
+
+        // Sets text for each option
+        menu.add(Menu.NONE, titleAsc, Menu.NONE, "Title (A-Z)");
+        menu.add(Menu.NONE, titleDesc, Menu.NONE, "Title (Z-A)");
+        menu.add(Menu.NONE, authorNameAsc, Menu.NONE, "Author (A-Z)");
+        menu.add(Menu.NONE, authorNameDesc, Menu.NONE, "Author (Z-A)");
+        menu.add(Menu.NONE, genreSort, Menu.NONE, "Genre");
+        menu.add(Menu.NONE, seriesSort, Menu.NONE, "Series");
+        menu.add(Menu.NONE, dateRead, Menu.NONE, "Date Read");
+
+        // Set the click listener for these menu items
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+
+            // Sort authors based on option chosen
+            /*if (itemId == titleAsc) {
+                sortAuthors(ViewAuthorsActivity.SortOption.FIRST_NAME_ASC);
+                return true;
+            }
+            else if (itemId == titleDesc) {
+                sortAuthors(ViewAuthorsActivity.SortOption.FIRST_NAME_DESC);
+                return true;
+            }
+            */if (itemId == authorNameAsc) {
+                mRepository.getItemsGroupedByAuthor(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
+                return true;
+            }
+            else if (itemId == authorNameDesc) {
+                mRepository.getItemsGroupedByAuthorLastName(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
+            }
+            else {
+                return false;
+            }
+            return true;
+        });
+
+        // Show the popup menu
+        popupMenu.show();
+    }
+
     // Activates when an book is clicked in the Recycler View
     // Passes the clicked book to the BookDetailsActivity.java
     // Passes along the book title as book_title

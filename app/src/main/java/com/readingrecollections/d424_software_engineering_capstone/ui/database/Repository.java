@@ -158,9 +158,33 @@ public class Repository {
         return mBookDao.getBooksGroupedByAuthor();
     }
 
+    public List<Book> getBooksGroupedByAuthorLastName() {
+        return mBookDao.getBooksGroupedByAuthorLastName();
+    }
+
     public void getItemsGroupedByAuthor(Consumer<List<Item>> callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Book> bookList = mBookDao.getBooksGroupedByAuthor();
+            List<Item> itemList = new ArrayList<>();
+            int lastAuthorId = -1;
+
+            for (Book book : bookList) {
+                if (book.getAuthorId() != lastAuthorId) {
+                    // Fetch author details
+                    Author author = mAuthorDao.getAuthorById(book.getAuthorId());
+                    itemList.add(author); // Add author as header
+                    lastAuthorId = book.getAuthorId();
+                }
+                itemList.add(book); // Add book under the correct author
+            }
+
+            callback.accept(itemList); // Pass the data back to the caller
+        });
+    }
+
+    public void getItemsGroupedByAuthorLastName(Consumer<List<Item>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Book> bookList = mBookDao.getBooksGroupedByAuthorLastName();
             List<Item> itemList = new ArrayList<>();
             int lastAuthorId = -1;
 
