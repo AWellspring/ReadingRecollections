@@ -22,6 +22,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_BOOK = 1;
     private static final int TYPE_GENRE = 2;
     private static final int TYPE_SERIES = 3;
+    private static final int TYPE_TITLE = 4;
+    private static final int TYPE_DATE = 5;
 
     private List<Item> items = new ArrayList<>();
     private Context context;
@@ -53,6 +55,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         else if (items.get(position) instanceof SeriesNameHeader) {
             return TYPE_SERIES;
         }
+        else if (items.get(position) instanceof TitleHeader) {
+            return TYPE_TITLE;
+        }
+        else if (items.get(position) instanceof DateHeader) {
+            return TYPE_DATE;
+        }
         else {
             return TYPE_BOOK;
         }
@@ -73,6 +81,14 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = inflater.inflate(R.layout.item_book_header, parent, false);
             return new SeriesHeaderViewHolder(view);
         }
+        else if (viewType == TYPE_TITLE) {
+            View view = inflater.inflate(R.layout.item_book_header, parent, false);
+            return new TitleHeaderViewHolder(view);
+        }
+        else if (viewType == TYPE_DATE) {
+            View view = inflater.inflate(R.layout.item_book_header, parent, false);
+            return new DateHeaderViewHolder(view);
+        }
         else {
             View view = inflater.inflate(R.layout.item_book2, parent, false);
             return new BookViewHolder(view, onBookClickListener);
@@ -90,6 +106,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         else if (holder instanceof SeriesHeaderViewHolder) {
             ((SeriesHeaderViewHolder) holder).bind((SeriesNameHeader) item);
+        }
+        else if (holder instanceof TitleHeaderViewHolder) {
+            ((TitleHeaderViewHolder) holder).bind((TitleHeader) item);
+        }
+        else if (holder instanceof DateHeaderViewHolder) {
+            ((DateHeaderViewHolder) holder).bind((DateHeader) item);
         }
         else if (holder instanceof BookViewHolder) {
             ((BookViewHolder) holder).bind((Book) item);
@@ -141,6 +163,30 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    static class TitleHeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView titleLetter;
+
+        public TitleHeaderViewHolder(View itemView) {
+            super(itemView);
+            titleLetter = itemView.findViewById(R.id.header_text);
+        }
+
+        public void bind(TitleHeader titleHeader) {
+            titleLetter.setText(titleHeader.getTitleLetter());
+        }
+    }
+
+    static class DateHeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView dateRead;
+
+        public DateHeaderViewHolder(View itemView) {
+            super(itemView);
+            dateRead = itemView.findViewById(R.id.header_text);
+        }
+        public void bind(DateHeader dateHeader) {
+            dateRead.setText(dateHeader.getDateRead());
+        }
+    }
     // BookViewHolder with onClick handling
     static class BookViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitle;

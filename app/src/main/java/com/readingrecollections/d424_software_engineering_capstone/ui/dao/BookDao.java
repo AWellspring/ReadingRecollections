@@ -29,6 +29,9 @@ public interface BookDao {
     @Query("SELECT * FROM book ORDER BY title ASC")
     List<Book> getAllBooks();
 
+    @Query("SELECT * FROM book ORDER BY title DESC")
+    List<Book> getAllBooksDesc();
+
     @Query("SELECT * FROM Book WHERE authorId = :authorId")
     List<Book> getBooksByAuthor(int authorId);
 
@@ -60,4 +63,7 @@ public interface BookDao {
 
     @Query("SELECT * FROM Book WHERE seriesName IS NOT NULL ORDER BY seriesName ASC, seriesNumber ASC")
     List<Book> getBooksGroupedBySeries();
+
+    @Query("SELECT * FROM Book WHERE dateRead IS NOT NULL ORDER BY dateRead DESC, title ASC")
+    List<Book> getBooksGroupedByDate();
 }

@@ -1,5 +1,7 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.database;
 
+import static com.readingrecollections.d424_software_engineering_capstone.ui.database.DateConverter.fromLocalDate;
+
 import android.app.Application;
 
 import java.time.LocalDate;
@@ -13,9 +15,11 @@ import com.readingrecollections.d424_software_engineering_capstone.ui.dao.Author
 import com.readingrecollections.d424_software_engineering_capstone.ui.dao.BookDao;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Book;
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.DateHeader;
 import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.GenreHeader;
 import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.Item;
 import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.SeriesNameHeader;
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.TitleHeader;
 
 // Manages operations between the UI and the database
 public class Repository {
@@ -168,6 +172,10 @@ public class Repository {
         return mBookDao.getBooksGroupedByGenre();
     }
 
+    public List<Book> getBooksGroupedByDate() {
+        return mBookDao.getBooksGroupedByDate();
+    }
+
     public void getItemsGroupedByAuthor(Consumer<List<Item>> callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Book> bookList = mBookDao.getBooksGroupedByAuthor();
@@ -248,6 +256,86 @@ public class Repository {
                 }
                 itemList.add(book);
             }
+            callback.accept(itemList);
+        });
+    }
+
+    public void getItemsGroupedByDate(Consumer<List<Item>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Book> bookList = mBookDao.getBooksGroupedByDate();
+            List<Item> itemList = new ArrayList<>();
+            String lastDate = null;
+
+            for (Book book : bookList) {
+                // Skip books without a series name
+                if (book.getDateRead() == null) {
+                    continue;
+                }
+                String dateRead = fromLocalDate(book.getDateRead());
+                if (!dateRead.equals(lastDate)) {
+                    // Fetch book details
+                    itemList.add(new DateHeader(dateRead));
+                    lastDate = dateRead;
+                }
+                itemList.add(book);
+            }
+            callback.accept(itemList);
+        });
+    }
+
+        public void getItemsGroupedByTitle(Consumer<List<Item>> callback) {
+            Executors.newSingleThreadExecutor().execute(() -> {
+                List<Book> bookList = mBookDao.getAllBooks();
+                List<Item> itemList = new ArrayList<>();
+                char lastChar = '\u0000';
+
+                for (Book book : bookList) {
+                    // Skip books without a title
+                    if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
+                        continue;
+                    }
+                    char currChar = book.getTitle().charAt(0);
+                    if (currChar != lastChar) {
+                        // Fetch book details
+                        itemList.add(new TitleHeader(currChar));
+                        lastChar = currChar;
+                    }
+                    itemList.add(book);
+                }
+                callback.accept(itemList);
+            });
+    }
+
+    public void getItemsGroupedByTitleDesc(Consumer<List<Item>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Book> bookList = mBookDao.getAllBooks();
+            List<Item> itemList = new ArrayList<>();
+
+
+            bookList.sort((b1, b2) -> {
+                char firstLetter1 = b1.getTitle().charAt(0);
+                char firstLetter2 = b2.getTitle().charAt(0);
+                return Character.compare(firstLetter2, firstLetter1);
+            });
+
+
+            char lastChar = '\u0000';
+
+            for (Book book : bookList) {
+                if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
+                    continue;
+                }
+
+                char currChar = book.getTitle().charAt(0);
+
+                if (currChar != lastChar) {
+                    itemList.add(new TitleHeader(currChar));
+                    lastChar = currChar;
+                }
+
+                itemList.add(book);
+            }
+
             callback.accept(itemList);
         });
     }

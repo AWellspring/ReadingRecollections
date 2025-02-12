@@ -140,16 +140,22 @@ public class ViewBooksActivity extends AppCompatActivity {
         popupMenu.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
 
-            // Sort authors based on option chosen
-            /*if (itemId == titleAsc) {
-                sortAuthors(ViewAuthorsActivity.SortOption.FIRST_NAME_ASC);
+            if (itemId == titleAsc) {
+                mRepository.getItemsGroupedByTitle(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
                 return true;
             }
             else if (itemId == titleDesc) {
-                sortAuthors(ViewAuthorsActivity.SortOption.FIRST_NAME_DESC);
-                return true;
+                mRepository.getItemsGroupedByTitleDesc(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
             }
-            */if (itemId == authorNameAsc) {
+            else if (itemId == authorNameAsc) {
                 mRepository.getItemsGroupedByAuthor(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
@@ -173,6 +179,13 @@ public class ViewBooksActivity extends AppCompatActivity {
             }
             else if (itemId == seriesSort) {
                 mRepository.getItemsGroupedBySeries(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
+            }
+            else if (itemId == dateRead) {
+                mRepository.getItemsGroupedByDate(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
                     });
