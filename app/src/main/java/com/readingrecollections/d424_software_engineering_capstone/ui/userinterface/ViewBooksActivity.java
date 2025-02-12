@@ -1,6 +1,7 @@
 package com.readingrecollections.d424_software_engineering_capstone.ui.userinterface;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -62,21 +63,17 @@ public class ViewBooksActivity extends AppCompatActivity {
         // Initializes repository
         mRepository = new Repository(getApplication());
 
-        mRepository.executor.execute(() -> {
-            bookList = mRepository.getAllBooks();
-            // Return to main thread to update UI
-            runOnUiThread(() -> {
-                // Calls the loadBooks method defined below to populate RecyclerView
-                loadBooks();
-            });
-        });
-
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("View Books");
             // Enables the back button in the Action Bar
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        SharedPreferences preferences = getSharedPreferences("SortPreferences", MODE_PRIVATE);
+        int sortOption = preferences.getInt("sort_option", 3); // Default to Author (A-Z)
+
+        applySortOption(sortOption);
     }
 
     // Dropdown menu displaying sort options
@@ -139,16 +136,19 @@ public class ViewBooksActivity extends AppCompatActivity {
         // Set the click listener for these menu items
         popupMenu.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
+            SharedPreferences preferences = getSharedPreferences("SortPreferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
 
             if (itemId == titleAsc) {
+                editor.putInt("sort_option", titleAsc);
                 mRepository.getItemsGroupedByTitle(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
                     });
                 });
-                return true;
             }
             else if (itemId == titleDesc) {
+                editor.putInt("sort_option", titleDesc);
                 mRepository.getItemsGroupedByTitleDesc(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
@@ -156,14 +156,15 @@ public class ViewBooksActivity extends AppCompatActivity {
                 });
             }
             else if (itemId == authorNameAsc) {
+                editor.putInt("sort_option", authorNameAsc);
                 mRepository.getItemsGroupedByAuthor(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
                     });
                 });
-                return true;
             }
             else if (itemId == authorNameDesc) {
+                editor.putInt("sort_option", authorNameDesc);
                 mRepository.getItemsGroupedByAuthorLastName(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
@@ -171,6 +172,7 @@ public class ViewBooksActivity extends AppCompatActivity {
                 });
             }
             else if (itemId == genreSort) {
+                editor.putInt("sort_option", genreSort);
                 mRepository.getItemsGroupedByGenre(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
@@ -178,6 +180,7 @@ public class ViewBooksActivity extends AppCompatActivity {
                 });
             }
             else if (itemId == seriesSort) {
+                editor.putInt("sort_option", seriesSort);
                 mRepository.getItemsGroupedBySeries(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
@@ -185,6 +188,7 @@ public class ViewBooksActivity extends AppCompatActivity {
                 });
             }
             else if (itemId == dateRead) {
+                editor.putInt("sort_option", dateRead);
                 mRepository.getItemsGroupedByDate(items -> {
                     runOnUiThread(() -> {
                         adapter.setItems(items);
@@ -194,6 +198,7 @@ public class ViewBooksActivity extends AppCompatActivity {
             else {
                 return false;
             }
+            editor.apply();
             return true;
         });
 
@@ -218,11 +223,21 @@ public class ViewBooksActivity extends AppCompatActivity {
     }
 
     // Method to fetch book titles from the repository and display them
-    private void loadBooks() {
-        mRepository.getItemsGroupedByAuthor(items -> {
-            runOnUiThread(() -> {
-                adapter.setItems(items);
-            });
-        });
+    private void applySortOption(int sortOption) {
+        if (sortOption == 1) {
+            mRepository.getItemsGroupedByTitle(items -> runOnUiThread(() -> adapter.setItems(items)));
+        } else if (sortOption == 2) {
+            mRepository.getItemsGroupedByTitleDesc(items -> runOnUiThread(() -> adapter.setItems(items)));
+        } else if (sortOption == 3) {
+            mRepository.getItemsGroupedByAuthor(items -> runOnUiThread(() -> adapter.setItems(items)));
+        } else if (sortOption == 4) {
+            mRepository.getItemsGroupedByAuthorLastName(items -> runOnUiThread(() -> adapter.setItems(items)));
+        } else if (sortOption == 5) {
+            mRepository.getItemsGroupedByGenre(items -> runOnUiThread(() -> adapter.setItems(items)));
+        } else if (sortOption == 6) {
+            mRepository.getItemsGroupedBySeries(items -> runOnUiThread(() -> adapter.setItems(items)));
+        } else if (sortOption == 7) {
+            mRepository.getItemsGroupedByDate(items -> runOnUiThread(() -> adapter.setItems(items)));
+        }
     }
 }
