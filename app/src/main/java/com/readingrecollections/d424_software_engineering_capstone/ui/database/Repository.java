@@ -6,7 +6,10 @@ import android.app.Application;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -263,22 +266,24 @@ public class Repository {
     public void getItemsGroupedByDate(Consumer<List<Item>> callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Book> bookList = mBookDao.getBooksGroupedByDate();
-            List<Item> itemList = new ArrayList<>();
-            String lastDate = null;
+            Map<LocalDate, List<Book>> bookMap = new TreeMap<>(Collections.reverseOrder());
 
             for (Book book : bookList) {
-                // Skip books without a series name
-                if (book.getDateRead() == null) {
-                    continue;
-                }
-                String dateRead = fromLocalDate(book.getDateRead());
-                if (!dateRead.equals(lastDate)) {
-                    // Fetch book details
-                    itemList.add(new DateHeader(dateRead));
-                    lastDate = dateRead;
-                }
-                itemList.add(book);
+                if (book.getDateRead() == null) continue;
+
+                LocalDate date = DateConverter.fromString(DateConverter.fromLocalDate(book.getDateRead()));
+                bookMap.putIfAbsent(date, new ArrayList<>());
+                bookMap.get(date).add(book);
             }
+
+
+            List<Item> itemList = new ArrayList<>();
+            for (Map.Entry<LocalDate, List<Book>> entry : bookMap.entrySet()) {
+                String formattedDate = fromLocalDate(entry.getKey());
+                itemList.add(new DateHeader(formattedDate));
+                itemList.addAll(entry.getValue());
+            }
+
             callback.accept(itemList);
         });
     }
