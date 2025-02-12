@@ -26,7 +26,7 @@ public interface BookDao {
     void delete(Book book);
 
     // Retrieves all rows from the book table
-    @Query("SELECT * FROM book")
+    @Query("SELECT * FROM book ORDER BY title ASC")
     List<Book> getAllBooks();
 
     @Query("SELECT * FROM Book WHERE authorId = :authorId")
@@ -41,7 +41,7 @@ public interface BookDao {
     // Searches book table for all genres
     // Returns list of genres, with each genre only on the list once
     // Does not return null
-    @Query("SELECT DISTINCT genre FROM book WHERE genre IS NOT NULL")
+    @Query("SELECT DISTINCT genre FROM book WHERE genre IS NOT NULL ORDER BY genre ASC")
     List<String> getAllGenres();
 
     // Searches book table for book with matching title and author id
@@ -54,4 +54,10 @@ public interface BookDao {
 
     @Query("SELECT * FROM Book INNER JOIN Author ON Book.authorId = Author.Id ORDER BY Author.authorFullName DESC, Book.title ASC")
     List<Book> getBooksGroupedByAuthorLastName();
+
+    @Query("SELECT * FROM Book WHERE genre IS NOT NULL ORDER BY genre ASC, title ASC")
+    List<Book> getBooksGroupedByGenre();
+
+    @Query("SELECT * FROM Book WHERE seriesName IS NOT NULL ORDER BY seriesName ASC, seriesNumber ASC")
+    List<Book> getBooksGroupedBySeries();
 }

@@ -20,6 +20,8 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_AUTHOR = 0;
     private static final int TYPE_BOOK = 1;
+    private static final int TYPE_GENRE = 2;
+    private static final int TYPE_SERIES = 3;
 
     private List<Item> items = new ArrayList<>();
     private Context context;
@@ -44,7 +46,14 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         if (items.get(position) instanceof Author) {
             return TYPE_AUTHOR;
-        } else {
+        }
+        else if (items.get(position) instanceof GenreHeader) {
+            return TYPE_GENRE;
+        }
+        else if (items.get(position) instanceof SeriesNameHeader) {
+            return TYPE_SERIES;
+        }
+        else {
             return TYPE_BOOK;
         }
     }
@@ -55,7 +64,16 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == TYPE_AUTHOR) {
             View view = inflater.inflate(R.layout.item_book_header, parent, false);
             return new AuthorViewHolder(view);
-        } else {
+        }
+        else if (viewType == TYPE_GENRE) {
+            View view = inflater.inflate(R.layout.item_book_header, parent, false);
+            return new GenreHeaderViewHolder(view);
+        }
+        else if (viewType == TYPE_SERIES) {
+            View view = inflater.inflate(R.layout.item_book_header, parent, false);
+            return new SeriesHeaderViewHolder(view);
+        }
+        else {
             View view = inflater.inflate(R.layout.item_book2, parent, false);
             return new BookViewHolder(view, onBookClickListener);
         }
@@ -66,7 +84,14 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Item item = items.get(position);
         if (holder instanceof AuthorViewHolder) {
             ((AuthorViewHolder) holder).bind((Author) item);
-        } else if (holder instanceof BookViewHolder) {
+        }
+        else if (holder instanceof GenreHeaderViewHolder) {
+            ((GenreHeaderViewHolder) holder).bind((GenreHeader) item);
+        }
+        else if (holder instanceof SeriesHeaderViewHolder) {
+            ((SeriesHeaderViewHolder) holder).bind((SeriesNameHeader) item);
+        }
+        else if (holder instanceof BookViewHolder) {
             ((BookViewHolder) holder).bind((Book) item);
         }
     }
@@ -87,6 +112,32 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void bind(Author author) {
             authorName.setText(author.getAuthorFullName());
 
+        }
+    }
+
+    static class GenreHeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView genreName;
+
+        public GenreHeaderViewHolder(View itemView) {
+            super(itemView);
+            genreName = itemView.findViewById(R.id.header_text);
+        }
+
+        public void bind(GenreHeader genreHeader) {
+            genreName.setText(genreHeader.getGenre());
+        }
+    }
+
+    static class SeriesHeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView seriesName;
+
+        public SeriesHeaderViewHolder(View itemView) {
+            super(itemView);
+            seriesName = itemView.findViewById(R.id.header_text);
+        }
+
+        public void bind(SeriesNameHeader seriesNameHeader) {
+            seriesName.setText(seriesNameHeader.getSeriesName());
         }
     }
 

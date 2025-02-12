@@ -13,7 +13,9 @@ import com.readingrecollections.d424_software_engineering_capstone.ui.dao.Author
 import com.readingrecollections.d424_software_engineering_capstone.ui.dao.BookDao;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Author;
 import com.readingrecollections.d424_software_engineering_capstone.ui.entities.Book;
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.GenreHeader;
 import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.Item;
+import com.readingrecollections.d424_software_engineering_capstone.ui.userinterface.SeriesNameHeader;
 
 // Manages operations between the UI and the database
 public class Repository {
@@ -162,6 +164,10 @@ public class Repository {
         return mBookDao.getBooksGroupedByAuthorLastName();
     }
 
+    public List<Book> getBooksGroupedByGenre() {
+        return mBookDao.getBooksGroupedByGenre();
+    }
+
     public void getItemsGroupedByAuthor(Consumer<List<Item>> callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Book> bookList = mBookDao.getBooksGroupedByAuthor();
@@ -199,6 +205,50 @@ public class Repository {
             }
 
             callback.accept(itemList); // Pass the data back to the caller
+        });
+    }
+
+    public void getItemsGroupedByGenre(Consumer<List<Item>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Book> bookList = mBookDao.getBooksGroupedByGenre();
+            List<Item> itemList = new ArrayList<>();
+            String lastGenre = null;
+
+            for (Book book : bookList) {
+                // Skip books without a genre
+                if (book.getGenre() == null || book.getGenre().trim().isEmpty()) {
+                    continue;
+                }
+                if (!book.getGenre().equals(lastGenre)) {
+                    // Fetch book details
+                    itemList.add(new GenreHeader(book.getGenre()));
+                    lastGenre = book.getGenre();
+                }
+                itemList.add(book);
+            }
+            callback.accept(itemList);
+        });
+    }
+
+    public void getItemsGroupedBySeries(Consumer<List<Item>> callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Book> bookList = mBookDao.getBooksGroupedBySeries();
+            List<Item> itemList = new ArrayList<>();
+            String lastSeries = null;
+
+            for (Book book : bookList) {
+                // Skip books without a series name
+                if (book.getSeriesName() == null || book.getSeriesName().trim().isEmpty()) {
+                    continue;
+                }
+                if (!book.getSeriesName().equals(lastSeries)) {
+                    // Fetch book details
+                    itemList.add(new SeriesNameHeader(book.getSeriesName()));
+                    lastSeries = book.getSeriesName();
+                }
+                itemList.add(book);
+            }
+            callback.accept(itemList);
         });
     }
 }

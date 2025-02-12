@@ -164,6 +164,20 @@ public class ViewBooksActivity extends AppCompatActivity {
                     });
                 });
             }
+            else if (itemId == genreSort) {
+                mRepository.getItemsGroupedByGenre(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
+            }
+            else if (itemId == seriesSort) {
+                mRepository.getItemsGroupedBySeries(items -> {
+                    runOnUiThread(() -> {
+                        adapter.setItems(items);
+                    });
+                });
+            }
             else {
                 return false;
             }
