@@ -407,18 +407,22 @@ public class EditBookActivity extends AppCompatActivity {
                 mRepository.executor.execute(() -> {
                     mRepository.updateBook(book);
 
-                    bookTitle = book.getTitle();
-                    authorName = mRepository.getAuthorNameById(book.getAuthorId());
-                    // Create an intent to go back to BookDetailsActivity
-                    Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
-                    // Pass the author name and book title
-                    intent.putExtra("author_name", authorName);
-                    intent.putExtra("book_title", bookTitle);
-                    if (fromPage != null) {
-                        intent.putExtra("from_page", fromPage);
-                    }
-                    startActivity(intent);
-                    finish();
+                    runOnUiThread(() -> {
+                                Toast.makeText(EditBookActivity.this, title + " updated!", Toast.LENGTH_LONG).show();
+                            });
+
+                        bookTitle = book.getTitle();
+                        authorName = mRepository.getAuthorNameById(book.getAuthorId());
+                        // Create an intent to go back to BookDetailsActivity
+                        Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
+                        // Pass the author name and book title
+                        intent.putExtra("author_name", authorName);
+                        intent.putExtra("book_title", bookTitle);
+                        if (fromPage != null) {
+                            intent.putExtra("from_page", fromPage);
+                        }
+                        startActivity(intent);
+                        finish();
                 });
             });
         }

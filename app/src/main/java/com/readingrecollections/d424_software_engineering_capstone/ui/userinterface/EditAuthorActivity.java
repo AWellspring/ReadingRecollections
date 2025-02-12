@@ -178,7 +178,7 @@ public class EditAuthorActivity extends AppCompatActivity {
 
                 // Returns to previous screen after update
                 runOnUiThread(() -> {
-                    Toast.makeText(EditAuthorActivity.this, "Author updated in your library!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditAuthorActivity.this, authorName + " updated in your library!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(EditAuthorActivity.this, AuthorDetailsActivity.class);
                     // Passes the new authorName to the AuthorDetails page
                     intent.putExtra("author_name", authorName);
@@ -237,7 +237,7 @@ public class EditAuthorActivity extends AppCompatActivity {
 
             // Return to View Authors page with success message
             runOnUiThread(() -> {
-                Toast.makeText(EditAuthorActivity.this, "Author deleted from your library!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EditAuthorActivity.this, authorName + " deleted from your library!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(EditAuthorActivity.this, ViewAuthorsActivity.class);
                 startActivity(intent);
                 finish();
