@@ -90,6 +90,8 @@ public class AddBookActivity extends AppCompatActivity {
 
     private String tempName;
 
+    private String fromBook;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +108,9 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Passes author name from the intent on the Author Details page
         tempName = getIntent().getStringExtra("author_name");
+
+        // Passes fromBook from the intent on the View Books page
+        fromBook = getIntent().getStringExtra("view_books");
 
         // If coming from the Author Details page
         if (tempName != null) {
@@ -209,6 +214,14 @@ public class AddBookActivity extends AppCompatActivity {
             Intent intent = new Intent(AddBookActivity.this, AuthorDetailsActivity.class);
             // Pass the author name
             intent.putExtra("author_name", authorName);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        // If coming from the View Books page
+        else if (fromBook != null) {
+            // Create an intent to go back to ViewBooksActivity
+            Intent intent = new Intent(AddBookActivity.this, ViewBooksActivity.class);
             startActivity(intent);
             finish();
             return true;
@@ -386,6 +399,13 @@ public class AddBookActivity extends AppCompatActivity {
                                     Intent intent = new Intent(AddBookActivity.this, AuthorDetailsActivity.class);
                                     // Pass the author name
                                     intent.putExtra("author_name", authorName);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                // If coming from the View Books page
+                                else if (fromBook != null) {
+                                    // Create an intent to go back to ViewBooksActivity
+                                    Intent intent = new Intent(AddBookActivity.this, ViewBooksActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

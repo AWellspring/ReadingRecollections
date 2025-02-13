@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -62,6 +63,19 @@ public class ViewBooksActivity extends AppCompatActivity {
 
         // Initializes repository
         mRepository = new Repository(getApplication());
+
+        Button addBookButton = findViewById(R.id.add_book_button);
+
+        // Sets onClick to take the user to the AddAuthorActivity page
+        addBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fromPage = "View Books";
+                Intent intent = new Intent(ViewBooksActivity.this, AddBookActivity.class);
+                intent.putExtra("view_books", fromPage);
+                startActivity(intent);
+            }
+        });
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {
