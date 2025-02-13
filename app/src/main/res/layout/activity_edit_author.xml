@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.userinterface.EditAuthorActivity">
 
+    <!-- Home Button -->
+    <ImageButton
+        android:id="@+id/home_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="8dp"
+        android:background="@drawable/home_button"
+        android:scaleType="fitCenter"
+        android:elevation="4dp"
+        app:srcCompat="@drawable/home_icon"
+        app:layout_constraintTop_toTopOf="@id/banner_image"
+        app:layout_constraintBottom_toBottomOf="@id/banner_image"
+        app:layout_constraintEnd_toStartOf="@id/banner_image"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="30dp"/>
+
     <!-- Small banner image -->
     <ImageView
         android:id="@+id/banner_image"
