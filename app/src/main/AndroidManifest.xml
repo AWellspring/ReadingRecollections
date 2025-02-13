@@ -13,9 +13,6 @@
         android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="35" >
         <activity
-            android:name=".ui.userinterface.CategoryItem"
-            android:exported="false" />
-        <activity
             android:name=".ui.userinterface.ViewBooksActivity"
             android:exported="false"
             android:parentActivityName=".ui.userinterface.HomeActivity" />

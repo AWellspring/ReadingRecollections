@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
 import androidx.activity.EdgeToEdge;
@@ -65,6 +66,18 @@ public class ViewAuthorsActivity extends AppCompatActivity implements AuthorAdap
 
         // Calls the loadAuthors() method defined below
         loadAuthors();
+
+        // Initializes the home button
+        ImageButton homeButton = findViewById(R.id.home_button);
+
+        // Sets listener to return the user to Home when homeButton is clicked
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewAuthorsActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {

@@ -2,8 +2,10 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.userinter
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -67,6 +69,18 @@ public class AddAuthorActivity extends AppCompatActivity {
         lastNameLayout = findViewById(R.id.author_last_name_input_layout);
 
         fromPage = getIntent().getStringExtra("view_authors");
+
+        // Initializes the home button
+        ImageButton homeButton = findViewById(R.id.home_button);
+
+        // Sets listener to return the user to Home when homeButton is clicked
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddAuthorActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Initializes the save author button
         Button saveAuthorButton = findViewById(R.id.save_author_button);

@@ -3,10 +3,12 @@ package com.readingrecollections.d424_software_engineering_capstone.ui.userinter
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -154,6 +156,18 @@ public class EditBookActivity extends AppCompatActivity {
 
         // Sets listener to trigger the deleteAuthor method when clicked
         deleteBookButton.setOnClickListener(view -> deleteBook());
+
+        // Initializes the home button
+        ImageButton homeButton = findViewById(R.id.home_button);
+
+        // Sets listener to return the user to Home when homeButton is clicked
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditBookActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {

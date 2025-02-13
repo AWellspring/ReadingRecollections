@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -110,6 +111,18 @@ public class BookDetailsActivity extends AppCompatActivity {
                 });
             });
         }
+
+        // Initializes the home button
+        ImageButton homeButton = findViewById(R.id.home_button);
+
+        // Sets listener to return the user to Home when homeButton is clicked
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BookDetailsActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {

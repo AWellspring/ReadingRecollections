@@ -4,10 +4,12 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -160,6 +162,18 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Set listener to trigger the submitBook method when clicked
         saveBookButton.setOnClickListener(view -> addBook());
+
+        // Initializes the home button
+        ImageButton homeButton = findViewById(R.id.home_button);
+
+        // Sets listener to return the user to Home when homeButton is clicked
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddBookActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Sets the Action Bar title
         if (getSupportActionBar() != null) {

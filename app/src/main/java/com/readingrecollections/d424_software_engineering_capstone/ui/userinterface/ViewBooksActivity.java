@@ -11,6 +11,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Button;
 
@@ -73,6 +74,18 @@ public class ViewBooksActivity extends AppCompatActivity {
                 String fromPage = "View Books";
                 Intent intent = new Intent(ViewBooksActivity.this, AddBookActivity.class);
                 intent.putExtra("view_books", fromPage);
+                startActivity(intent);
+            }
+        });
+
+        // Initializes the home button
+        ImageButton homeButton = findViewById(R.id.home_button);
+
+        // Sets listener to return the user to Home when homeButton is clicked
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewBooksActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
