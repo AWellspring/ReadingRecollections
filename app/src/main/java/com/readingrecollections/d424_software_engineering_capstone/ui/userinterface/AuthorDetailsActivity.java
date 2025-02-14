@@ -38,6 +38,8 @@ public class AuthorDetailsActivity extends AppCompatActivity {
 
     private int authorId;
 
+    private String fromSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,9 @@ public class AuthorDetailsActivity extends AppCompatActivity {
 
         // Passes author name from the intent on the previous page
         authorName = getIntent().getStringExtra("author_name");
+
+        // Passes the fromSearch from the intent on the SearchActivity
+        fromSearch = getIntent().getStringExtra("from_search");
 
         // Sets the TextView text to authorName
         authorNameView.setText(authorName);
@@ -128,6 +133,26 @@ public class AuthorDetailsActivity extends AppCompatActivity {
                startActivity(intent);
            }
         });
+    }
+
+    // Overrides the back button
+    // Checks if the fromSearch String is populated
+    // If it is, the user came from SearchActivity and will be returned there
+    // If it isn't, the user came from ViewAuthors and will be returned
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (fromSearch != null) {
+            Intent intent = new Intent(AuthorDetailsActivity.this, SearchActivity.class);
+            intent.putExtra("from_search", fromSearch);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(AuthorDetailsActivity.this, ViewAuthorsActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return true;
     }
 
     // Activates when an book is clicked in the Recycler View

@@ -179,6 +179,14 @@ public class Repository {
         return mBookDao.getBooksGroupedByDate();
     }
 
+    public List<Book> searchBooks(String query) {
+        return mBookDao.searchBooks(query);
+    }
+
+    public List<Author> searchAuthors(String query) {
+        return mAuthorDao.searchAuthors(query);
+    }
+
     public void getItemsGroupedByAuthor(Consumer<List<Item>> callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Book> bookList = mBookDao.getBooksGroupedByAuthor();

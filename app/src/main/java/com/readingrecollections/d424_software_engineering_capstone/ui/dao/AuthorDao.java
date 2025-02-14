@@ -46,5 +46,15 @@ public interface AuthorDao {
     // Searches author table for all author names, returns list of all author names
     @Query("SELECT authorFullName FROM author")
     List<String> getAllAuthorNames();
+
+    // Searches author table for anything that matches the user query
+    // Returns author if found
+    @Query("SELECT * FROM author " +
+            "WHERE (authorFullName IS NOT NULL AND authorFullName LIKE '%' || :query || '%') " +
+            "OR (authorFirstName IS NOT NULL AND authorFirstName LIKE '%' || :query || '%') " +
+            "OR (authorMiddleName IS NOT NULL AND authorMiddleName LIKE '%' || :query || '%') " +
+            "OR (authorLastName IS NOT NULL AND authorLastName LIKE '%' || :query || '%') " +
+            "ORDER BY authorFullName ASC")
+    List<Author> searchAuthors(String query);
 }
 

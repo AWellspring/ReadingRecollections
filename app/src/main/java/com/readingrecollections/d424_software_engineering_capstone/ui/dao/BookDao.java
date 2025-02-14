@@ -66,4 +66,18 @@ public interface BookDao {
 
     @Query("SELECT * FROM Book WHERE dateRead IS NOT NULL ORDER BY dateRead DESC, title ASC")
     List<Book> getBooksGroupedByDate();
+
+    // Searches book table for anything that matches the user query
+    // Returns book if found
+    @Query("SELECT * FROM Book INNER JOIN Author ON Book.authorId = Author.Id " +
+            "WHERE (title IS NOT NULL AND title LIKE '%' || :query || '%') " +
+            "OR (genre IS NOT NULL AND genre LIKE '%' || :query || '%') " +
+            "OR (dateRead IS NOT NULL AND dateRead LIKE '%' || :query || '%') " +
+            "OR (seriesName IS NOT NULL AND seriesName LIKE '%' || :query || '%') " +
+            "OR (Author.authorLastName IS NOT NULL AND Author.authorLastName LIKE '%' || :query || '%') " +
+            "OR (Author.authorMiddleName IS NOT NULL AND Author.authorMiddleName LIKE '%' || :query || '%') " +
+            "OR (Author.authorFirstName IS NOT NULL AND Author.authorFirstName LIKE '%' || :query || '%') " +
+            "OR (Author.authorFullName IS NOT NULL AND Author.authorFullName LIKE '%' || :query || '%') " +
+            "ORDER BY title ASC")
+    List<Book> searchBooks(String query);
 }

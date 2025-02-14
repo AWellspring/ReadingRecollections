@@ -47,6 +47,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private String fromPage;
 
+    private String fromSearch;
+
     private DateConverter dateConverter = new DateConverter();
 
     @Override
@@ -80,6 +82,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         // Passes the fromPage from the intent on the ViewBooksActivity
         fromPage = getIntent().getStringExtra("from_page");
+
+        // Passes the fromSearch from the intent on the SearchActivity
+        fromSearch = getIntent().getStringExtra("from_search");
 
         // Sets the TextView text to bookTitle
         bookTitleView.setText(bookTitle);
@@ -165,6 +170,13 @@ public class BookDetailsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         if (fromPage != null) {
             Intent intent = new Intent(BookDetailsActivity.this, ViewBooksActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        else if (fromSearch != null) {
+            Intent intent = new Intent(BookDetailsActivity.this, SearchActivity.class);
+            intent.putExtra("from_search", fromSearch);
             startActivity(intent);
             finish();
             return true;
