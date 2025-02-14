@@ -167,6 +167,10 @@ public class AuthorDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BookDetailsActivity.class);
         intent.putExtra("book_title", book.getTitle());
         intent.putExtra("author_name", authorName);
+        intent.putExtra("from_author", "from author");
+        if (fromSearch != null) {
+            intent.putExtra("from_search", fromSearch);
+        }
         startActivity(intent);
     }
 

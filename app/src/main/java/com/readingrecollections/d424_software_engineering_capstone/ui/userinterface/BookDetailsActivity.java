@@ -49,6 +49,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private String fromSearch;
 
+    private String fromAuthor;
+
     private DateConverter dateConverter = new DateConverter();
 
     @Override
@@ -85,6 +87,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         // Passes the fromSearch from the intent on the SearchActivity
         fromSearch = getIntent().getStringExtra("from_search");
+
+        // Passes the fromAuthor from the intent on the AuthorDetailsActivity
+        fromAuthor = getIntent().getStringExtra("from_author");
 
         // Sets the TextView text to bookTitle
         bookTitleView.setText(bookTitle);
@@ -143,21 +148,21 @@ public class BookDetailsActivity extends AppCompatActivity {
         buttonEditBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (fromPage != null) {
                     Intent intent = new Intent(BookDetailsActivity.this, EditBookActivity.class);
                     intent.putExtra("author_name", authorName);
                     intent.putExtra("book_title", bookTitle);
                     intent.putExtra("from_author", authorName);
-                    intent.putExtra("from_page", fromPage);
+                    if (fromAuthor != null) {
+                        intent.putExtra("from_author_page", fromAuthor);
+                    }
+                    if (fromSearch != null) {
+                        intent.putExtra("from_search", fromSearch);
+                    }
+                    if (fromPage != null) {
+                        intent.putExtra("from_page", fromPage);
+                    }
                     startActivity(intent);
-                }
-                else {
-                    Intent intent = new Intent(BookDetailsActivity.this, EditBookActivity.class);
-                    intent.putExtra("author_name", authorName);
-                    intent.putExtra("book_title", bookTitle);
-                    intent.putExtra("from_author", authorName);
-                    startActivity(intent);
-                }
+                    finish();
             }
         });
     }
@@ -172,22 +177,22 @@ public class BookDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(BookDetailsActivity.this, ViewBooksActivity.class);
             startActivity(intent);
             finish();
-            return true;
+        }
+        else if (fromAuthor != null) {
+            Intent intent = new Intent(BookDetailsActivity.this, AuthorDetailsActivity.class);
+            if (fromSearch != null) {
+                intent.putExtra("from_search", fromSearch);
+            }
+            intent.putExtra("author_name", authorName);
+            startActivity(intent);
+            finish();
         }
         else if (fromSearch != null) {
             Intent intent = new Intent(BookDetailsActivity.this, SearchActivity.class);
             intent.putExtra("from_search", fromSearch);
             startActivity(intent);
             finish();
-            return true;
         }
-        else {
-            Intent intent = new Intent(BookDetailsActivity.this, AuthorDetailsActivity.class);
-            // Pass the author name and book title
-            intent.putExtra("author_name", authorName);
-            startActivity(intent);
-            finish();
-            return true;
-        }
+        return true;
     }
 }

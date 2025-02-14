@@ -98,6 +98,10 @@ public class EditBookActivity extends AppCompatActivity {
 
     private String fromPage;
 
+    private String fromSearch;
+
+    private String fromAuthor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +148,12 @@ public class EditBookActivity extends AppCompatActivity {
 
         // Passes fromPage from the intent to determine previous page
         fromPage = getIntent().getStringExtra("from_page");
+
+        // Passes fromSearch from the intent to determine previous page
+        fromSearch = getIntent().getStringExtra("from_search");
+
+        // passes fromAuthor from the intent to determine previous page
+        fromAuthor = getIntent().getStringExtra("from_author_page");
 
         // Initialize update button
         Button updateBookButton = findViewById(R.id.update_book_button);
@@ -250,25 +260,22 @@ public class EditBookActivity extends AppCompatActivity {
     // If it isn't, the user came from BookDetails from AuthorDetails
     @Override
     public boolean onSupportNavigateUp() {
-        if (fromPage != null) {
             Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
             // Pass the author name and book title
             intent.putExtra("author_name", authorName);
             intent.putExtra("book_title", bookTitle);
-            intent.putExtra("from_page", fromPage);
+            if (fromPage != null) {
+                intent.putExtra("from_page", fromPage);
+            }
+            if (fromSearch != null) {
+                intent.putExtra("from_search", fromSearch);
+            }
+            if (fromAuthor != null) {
+                intent.putExtra("from_author", fromAuthor);
+            }
             startActivity(intent);
             finish();
             return true;
-        }
-        else{
-            Intent intent = new Intent(EditBookActivity.this, BookDetailsActivity.class);
-            // Pass the author name and book title
-            intent.putExtra("author_name", authorName);
-            intent.putExtra("book_title", bookTitle);
-            startActivity(intent);
-            finish();
-            return true;
-        }
     }
 
     // Fetches authors from database for the authorInput suggestion
@@ -435,6 +442,12 @@ public class EditBookActivity extends AppCompatActivity {
                         if (fromPage != null) {
                             intent.putExtra("from_page", fromPage);
                         }
+                        if (fromSearch != null) {
+                            intent.putExtra("from_search", fromSearch);
+                        }
+                        if (fromAuthor != null) {
+                            intent.putExtra("from_author", fromAuthor);
+                        }
                         startActivity(intent);
                         finish();
                 });
@@ -469,9 +482,23 @@ public class EditBookActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-                else {
+                else if (fromAuthor != null) {
                     Intent intent = new Intent(EditBookActivity.this, AuthorDetailsActivity.class);
                     intent.putExtra("author_name", authorName);
+                    if (fromSearch != null) {
+                        intent.putExtra("from_search", fromSearch);
+                    }
+                    startActivity(intent);
+                    finish();
+                }
+                else if (fromSearch != null) {
+                    Intent intent = new Intent(EditBookActivity.this, SearchActivity.class);
+                    intent.putExtra("from_search", fromSearch);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(EditBookActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }
