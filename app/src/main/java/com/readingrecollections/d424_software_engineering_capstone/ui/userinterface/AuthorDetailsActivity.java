@@ -38,6 +38,7 @@ public class AuthorDetailsActivity extends AppCompatActivity {
 
     private int authorId;
 
+    // Signifies came from SearchActivity
     private String fromSearch;
 
     @Override
