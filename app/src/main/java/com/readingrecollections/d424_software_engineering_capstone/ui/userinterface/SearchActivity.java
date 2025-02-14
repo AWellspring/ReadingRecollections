@@ -40,6 +40,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private TextView timestamp;
 
+    private TextView noResults;
+
     private RecyclerView recyclerView;
     private SearchAdapter searchAdapter;
 
@@ -108,6 +110,9 @@ public class SearchActivity extends AppCompatActivity {
         // Sets the timestamp to the text field
         timestamp = findViewById(R.id.timestamp);
 
+        // Sets the noResults to the text field
+        noResults = findViewById(R.id.no_results);
+
         // Initializes the search button
         Button searchButton = findViewById(R.id.search_button);
 
@@ -152,10 +157,6 @@ public class SearchActivity extends AppCompatActivity {
             List<Book> books = mRepository.searchBooks(query);
             searchResults.addAll(books);
 
-            if (searchResults.isEmpty()) {
-                searchResults.add(new GenreHeader("No results found"));
-            }
-
             // Update RecyclerView on the main thread
             runOnUiThread(() -> {
                 // Add a timestamp at the top
@@ -163,6 +164,11 @@ public class SearchActivity extends AppCompatActivity {
                 timestamp.setText(timestampText);
 
                 searchAdapter.setSearchResults(searchResults);
+
+                if (searchResults.isEmpty()) {
+                    String noResultString = "No results found for " + query;
+                    noResults.setText(noResultString);
+                }
             });
         }).start();
     }
