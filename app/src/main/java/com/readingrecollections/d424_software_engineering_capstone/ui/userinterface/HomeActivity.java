@@ -78,6 +78,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Calls the search button from activity_home.xml
+        Button buttonSearch = findViewById(R.id.search_button);
+
+        // Sets onClick to take the user to the SearchActivity.xml page
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Initializes a repository for managing data operations
         repository = new Repository(getApplication());
 
