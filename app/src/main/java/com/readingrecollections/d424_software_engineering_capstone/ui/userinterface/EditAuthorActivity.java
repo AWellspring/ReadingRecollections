@@ -47,6 +47,8 @@ public class EditAuthorActivity extends AppCompatActivity {
 
     private TextInputLayout lastNameLayout;
 
+    private String fromSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,9 @@ public class EditAuthorActivity extends AppCompatActivity {
 
         // Passes author name from the intent on the previous page
         authorName = getIntent().getStringExtra("author_name");
+
+        // Passes fromSearch from the intent on the Search page
+        fromSearch = getIntent().getStringExtra("from_search");
 
         // Sets authorFirstNameInput to the edit text field
         authorFirstNameInput = findViewById(R.id.author_first_name_input);
@@ -140,6 +145,9 @@ public class EditAuthorActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         // Create an intent to go back to AuthorDetailsActivity
         Intent intent = new Intent(EditAuthorActivity.this, AuthorDetailsActivity.class);
+        if (fromSearch != null) {
+            intent.putExtra("from_search", fromSearch);
+        }
         // Pass the author name
         intent.putExtra("author_name", authorName);
         startActivity(intent);
@@ -195,6 +203,9 @@ public class EditAuthorActivity extends AppCompatActivity {
                     Toast.makeText(EditAuthorActivity.this, authorName + " updated in your library!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(EditAuthorActivity.this, AuthorDetailsActivity.class);
                     // Passes the new authorName to the AuthorDetails page
+                    if (fromSearch != null) {
+                        intent.putExtra("from_search", fromSearch);
+                    }
                     intent.putExtra("author_name", authorName);
                     startActivity(intent);
                     finish();
@@ -252,9 +263,17 @@ public class EditAuthorActivity extends AppCompatActivity {
             // Return to View Authors page with success message
             runOnUiThread(() -> {
                 Toast.makeText(EditAuthorActivity.this, authorName + " deleted from your library!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(EditAuthorActivity.this, ViewAuthorsActivity.class);
-                startActivity(intent);
-                finish();
+                if (fromSearch != null) {
+                    Intent intent = new Intent(EditAuthorActivity.this, SearchActivity.class);
+                    intent.putExtra("from_search", fromSearch);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(EditAuthorActivity.this, ViewAuthorsActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             });
         });
     }

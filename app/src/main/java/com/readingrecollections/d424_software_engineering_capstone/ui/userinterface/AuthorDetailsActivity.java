@@ -118,6 +118,7 @@ public class AuthorDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AuthorDetailsActivity.this, EditAuthorActivity.class);
                 intent.putExtra("author_name", authorName);
+                intent.putExtra("from_search", fromSearch);
                 startActivity(intent);
             }
         });
@@ -130,6 +131,9 @@ public class AuthorDetailsActivity extends AppCompatActivity {
            @Override
            public void onClick(View view) {
                Intent intent = new Intent(AuthorDetailsActivity.this, AddBookActivity.class);
+               if (fromSearch != null) {
+                   intent.putExtra("from_search", fromSearch);
+               }
                intent.putExtra("author_name", authorName);
                startActivity(intent);
            }

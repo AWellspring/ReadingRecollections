@@ -94,6 +94,8 @@ public class AddBookActivity extends AppCompatActivity {
 
     private String fromBook;
 
+    private String fromSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +115,9 @@ public class AddBookActivity extends AppCompatActivity {
 
         // Passes fromBook from the intent on the View Books page
         fromBook = getIntent().getStringExtra("view_books");
+
+        // Passes fromSearch from the intent on Search page
+        fromSearch = getIntent().getStringExtra("from_search");
 
         // If coming from the Author Details page
         if (tempName != null) {
@@ -226,6 +231,9 @@ public class AddBookActivity extends AppCompatActivity {
         if (tempName != null) {
             // Create an intent to go back to AuthorDetailsActivity
             Intent intent = new Intent(AddBookActivity.this, AuthorDetailsActivity.class);
+            if (fromSearch != null) {
+                intent.putExtra("from_search", fromSearch);
+            }
             // Pass the author name
             intent.putExtra("author_name", authorName);
             startActivity(intent);
@@ -411,6 +419,9 @@ public class AddBookActivity extends AppCompatActivity {
                                 if (tempName != null) {
                                     // Create an intent to go back to AuthorDetailsActivity
                                     Intent intent = new Intent(AddBookActivity.this, AuthorDetailsActivity.class);
+                                    if (fromSearch != null) {
+                                        intent.putExtra("from_search", fromSearch);
+                                    }
                                     // Pass the author name
                                     intent.putExtra("author_name", authorName);
                                     startActivity(intent);

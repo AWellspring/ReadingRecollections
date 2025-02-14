@@ -165,7 +165,12 @@ public class SearchActivity extends AppCompatActivity {
 
                 searchAdapter.setSearchResults(searchResults);
 
-                if (searchResults.isEmpty()) {
+                if (!searchResults.isEmpty()) {
+                    String noResultString = "";
+                    noResults.setText(noResultString);
+                }
+
+                else if (searchResults.isEmpty()) {
                     String noResultString = "No results found for " + query;
                     noResults.setText(noResultString);
                 }
