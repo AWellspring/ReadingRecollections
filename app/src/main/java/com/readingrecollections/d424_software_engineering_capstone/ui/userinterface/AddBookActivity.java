@@ -402,7 +402,8 @@ public class AddBookActivity extends AppCompatActivity {
 
                     // If seriesNumber is not empty, sets seriesNumber to input
                     if (!seriesNumber.isEmpty()) {
-                        book.setSeriesNumber(Integer.parseInt(seriesNumberInput.getText().toString().trim()));
+                        double seriesNumberValue = Double.parseDouble(seriesNumberInput.getText().toString().trim());
+                        book.setSeriesNumber(seriesNumberValue);
                     }
                 }
                 else {

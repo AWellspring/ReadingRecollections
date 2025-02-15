@@ -246,7 +246,13 @@ public class EditBookActivity extends AppCompatActivity {
                         seriesNameInput.setText(book.getSeriesName());
                     }
                     if (book.getSeriesNumber() != 0) {
-                        seriesNumberInput.setText(Integer.toString(book.getSeriesNumber()));
+                        if (book.getSeriesNumber() % 1 == 0) {
+                            // For whole numbers (e.g., 3.0), show without decimal
+                            seriesNumberInput.setText(String.format("%.0f", book.getSeriesNumber()));
+                        } else {
+                            // For decimal numbers (e.g., 3.5), show with one decimal place
+                            seriesNumberInput.setText(String.format("%.1f", book.getSeriesNumber()));
+                        }
                     }
                 });
             });
@@ -419,7 +425,8 @@ public class EditBookActivity extends AppCompatActivity {
 
                     // If seriesNumber is not empty, sets seriesNumber to input
                     if (!seriesNumber.isEmpty()) {
-                        book.setSeriesNumber(Integer.parseInt(seriesNumberInput.getText().toString().trim()));
+                        double seriesNumberValue = Double.parseDouble(seriesNumberInput.getText().toString().trim());
+                        book.setSeriesNumber(seriesNumberValue);
                     }
                 } else {
                     book.setSeries(false);

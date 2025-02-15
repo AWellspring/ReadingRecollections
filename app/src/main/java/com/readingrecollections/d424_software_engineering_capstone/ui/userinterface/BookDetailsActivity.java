@@ -116,7 +116,13 @@ public class BookDetailsActivity extends AppCompatActivity {
                         seriesName.setText(book.getSeriesName());
                     }
                     if (book.getSeriesNumber() != 0) {
-                        seriesNumber.setText(Integer.toString(book.getSeriesNumber()));
+                        if (book.getSeriesNumber() % 1 == 0) {
+                            // For whole numbers (e.g., 3.0), show without decimal
+                            seriesNumber.setText(String.format("%.0f", book.getSeriesNumber()));
+                        } else {
+                            // For decimal numbers (e.g., 3.5), show with one decimal place
+                            seriesNumber.setText(String.format("%.1f", book.getSeriesNumber()));
+                        }
                     }
                 });
             });

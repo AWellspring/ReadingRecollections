@@ -31,7 +31,7 @@ public class Book implements Item {
 
     private String seriesName;
 
-    private int seriesNumber;
+    private double seriesNumber;
 
     public int getId() {
         return id;
@@ -89,11 +89,11 @@ public class Book implements Item {
         this.seriesName = seriesName;
     }
 
-    public int getSeriesNumber() {
+    public double getSeriesNumber() {
         return seriesNumber;
     }
 
-    public void setSeriesNumber(int seriesNumber) {
+    public void setSeriesNumber(double seriesNumber) {
         this.seriesNumber = seriesNumber;
     }
 }
