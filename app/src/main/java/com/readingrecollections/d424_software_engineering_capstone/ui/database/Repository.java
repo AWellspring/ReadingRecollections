@@ -47,6 +47,14 @@ public class Repository {
         executor = Executors.newSingleThreadExecutor();
     }
 
+    // Overloaded constructor for testing
+    public Repository(Application application, DatabaseBuilder databaseBuilder){
+        mBookDao = databaseBuilder.bookDao();
+        mAuthorDao = databaseBuilder.authorDao();
+
+        executor = Executors.newSingleThreadExecutor();
+    }
+
     // Adds an author to the database if they don't already exist
     public void insertAuthorIfNotExists(Author author, Runnable onSuccess, Runnable onAuthorExists) {
         executor.execute(() -> {
