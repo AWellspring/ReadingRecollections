@@ -100,14 +100,4 @@ public class HomeActivity extends AppCompatActivity {
         // Enables the back button in the Action Bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-    // Clicking the back button takes the user to the parent activity defined in Manifest
-    @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

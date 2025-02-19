@@ -119,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
         // Sets listener to query the database and display results when searchButton is clicked
         searchButton.setOnClickListener(v -> {
             // Saves the user input to a string
-            searchQuery = searchInput.getText().toString().trim();
+            searchQuery = sanitizeInput(searchInput.getText().toString().trim());
             if (!searchQuery.isEmpty()) {
                 search(searchQuery);
             }
@@ -176,5 +176,11 @@ public class SearchActivity extends AppCompatActivity {
                 }
             });
         }).start();
+    }
+
+    // Remove the characters ", `, and ; to prevent SQL injection
+    private String sanitizeInput(String input) {
+        if (input == null) return "";
+        return input.trim().replaceAll("[\"`;%]", "");
     }
 }

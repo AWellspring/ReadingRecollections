@@ -121,9 +121,11 @@ public class AddAuthorActivity extends AppCompatActivity {
     private void addAuthor() {
 
         // Takes the user input, converts it to a string, and removes extra spaces
-        String firstName = authorFirstNameInput.getText().toString().trim();
-        String middleName = authorMiddleNameInput.getText().toString().trim();
-        String lastName = authorLastNameInput.getText().toString().trim();
+        // Also calls the sanitizeInput defined below to remove special characters which might
+        // be used in SQL injection
+        String firstName = sanitizeInput(authorFirstNameInput.getText().toString().trim());
+        String middleName = sanitizeInput(authorMiddleNameInput.getText().toString().trim());
+        String lastName = sanitizeInput(authorLastNameInput.getText().toString().trim());
 
         // Used to check validity of firstName and lastName
         boolean isValid = true;
@@ -196,5 +198,11 @@ public class AddAuthorActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Remove the characters ", `, and ; to prevent SQL injection
+    private String sanitizeInput(String input) {
+        if (input == null) return "";
+        return input.trim().replaceAll("[\"`;%]", "");
     }
 }

@@ -355,12 +355,14 @@ public class EditBookActivity extends AppCompatActivity {
 
     private void updateBook() {
         // Takes the user input, converts it to a string, and removes extra spaces
-        String title = bookTitleInput.getText().toString().trim();
-        String authorFullName = authorInput.getText().toString().trim();
-        String genre = bookGenreInput.getText().toString().trim();
-        String dateRead = dateReadInput.getText().toString().trim();
-        String seriesName = seriesNameInput.getText().toString().trim();
-        String seriesNumber = seriesNumberInput.getText().toString().trim();
+        // Also calls the sanitizeInput defined below to remove special characters which might
+        // be used in SQL injection
+        String title = sanitizeInput(bookTitleInput.getText().toString().trim());
+        String authorFullName = sanitizeInput(authorInput.getText().toString().trim());
+        String genre = sanitizeInput(bookGenreInput.getText().toString().trim());
+        String dateRead = sanitizeInput(dateReadInput.getText().toString().trim());
+        String seriesName = sanitizeInput(seriesNameInput.getText().toString().trim());
+        String seriesNumber = sanitizeInput(seriesNumberInput.getText().toString().trim());
 
         // Used to check validity of firstName and lastName
         boolean isValid = true;
@@ -511,5 +513,11 @@ public class EditBookActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    // Remove the characters ", `, and ; to prevent SQL injection
+    private String sanitizeInput(String input) {
+        if (input == null) return "";
+        return input.trim().replaceAll("[\"`;%]", "");
     }
 }
