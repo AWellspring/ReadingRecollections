@@ -44,7 +44,7 @@ public class RepositoryTest {
                 .build();
 
         // Get the DAO from the database
-        authorDao = database.authorDao(); // Assuming your DatabaseBuilder class has this method
+        authorDao = database.authorDao();
 
         // Ensure authorDao is not null
         if (authorDao == null) {
@@ -70,19 +70,20 @@ public class RepositoryTest {
 
     @Test
     public void testGetAuthorByName() {
-        // Given: Create and insert an author
+        // Create and insert an author
         Author author = new Author();
         author.setAuthorFirstName("Jim");
         author.setAuthorLastName("Butcher");
-        author.updateFullName(); // Assuming the updateFullName method is used to set the full name
-        authorDao.insert(author); // Insert author directly into the DAO
+        author.updateFullName();
+        authorDao.insert(author);
 
-        // When: Retrieve the author by name
+        // Retrieve the author by name
         Author retrievedAuthor = repository.getAuthorByName("Jim Butcher");
 
-        // Then: Verify that the correct author is returned
+        // Verify that the correct author is returned
         assertNotNull("Author should not be null", retrievedAuthor);
-        assertEquals("Author name should match", "Jim Butcher", retrievedAuthor.getAuthorFullName());
+        assertEquals("Author name should match", "Jim Butcher",
+                retrievedAuthor.getAuthorFullName());
     }
 
     @Test
@@ -113,21 +114,26 @@ public class RepositoryTest {
         author4.updateFullName();
         authorDao.insert(author4);
 
+        // Retrieve all authors by their names
         List<String> retrievedAuthors = repository.getAllAuthorNames();
 
-        // Then: Assert that the retrieved list is not empty
+        // Assert that the retrieved list is not empty
         assertNotNull("The list of authors should not be null", retrievedAuthors);
         assertFalse("The list of authors should not be empty", retrievedAuthors.isEmpty());
 
-        // Then: Assert that the correct number of authors are returned
-        assertEquals("The number of authors returned is incorrect", 4, retrievedAuthors.size());
+        // Assert that the correct number of authors are returned
+        assertEquals("The number of authors returned is incorrect",
+                4, retrievedAuthors.size());
 
-        // Then: Assert that the names match the expected values
-        assertTrue("The list should contain 'Jim Butcher'", retrievedAuthors.contains("Jim Butcher"));
-        assertTrue("The list should contain 'Karen Traviss'", retrievedAuthors.contains("Karen Traviss"));
-        assertTrue("The list should contain 'Robin McKinley'", retrievedAuthors.contains("Robin McKinley"));
-        assertTrue("The list should contain 'Sarah J. Maas'", retrievedAuthors.contains("Sarah J. Maas"));
+        // Assert that the names match the expected values
+        assertTrue("The list should contain 'Jim Butcher'",
+                retrievedAuthors.contains("Jim Butcher"));
+        assertTrue("The list should contain 'Karen Traviss'",
+                retrievedAuthors.contains("Karen Traviss"));
+        assertTrue("The list should contain 'Robin McKinley'",
+                retrievedAuthors.contains("Robin McKinley"));
+        assertTrue("The list should contain 'Sarah J. Maas'",
+                retrievedAuthors.contains("Sarah J. Maas"));
 
     }
-
 }
