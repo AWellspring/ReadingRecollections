@@ -30,10 +30,29 @@
         android:layout_height="125dp"
         android:layout_marginBottom="16dp"
         app:srcCompat="@drawable/reading_recollections_banner"
-        app:layout_constraintBottom_toTopOf="@+id/input_first_name_field"
+        app:layout_constraintBottom_toTopOf="@+id/input_scroll_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Scrollable section for input fields -->
+    <ScrollView
+        android:id="@+id/input_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/banner_image"
+        app:layout_constraintBottom_toTopOf="@id/update_author_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false">
+
+    <!-- Wrapper LinearLayout to contain all input fields -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <!-- Text view with an editable field for the Author First Name string
         Formatted so the EditText is aligned horizontally with the TextView -->
@@ -154,6 +173,8 @@
                 android:gravity="end"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 
     <!-- Button to update author in database -->
     <Button
@@ -167,6 +188,7 @@
         android:background="@drawable/rounded_button"
         android:elevation="4dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/input_scroll_view"
         app:layout_constraintBottom_toTopOf="@id/delete_author_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
