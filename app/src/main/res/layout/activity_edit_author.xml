@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:hint="First Name"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Middle Name (Optional)"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

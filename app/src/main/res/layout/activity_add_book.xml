@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Author Name"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"
                 android:completionThreshold="1"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Genre (Optional)"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"
                 android:completionThreshold="1"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -320,7 +320,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Name (Optional)"
                 android:textSize="20sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:gravity="end"
                 android:completionThreshold="1"/>
         </com.google.android.material.textfield.TextInputLayout>

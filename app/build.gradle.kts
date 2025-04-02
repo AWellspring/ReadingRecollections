@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.readingrecollections.d424_software_engineering_capstone"
+    namespace = "com.readingrecollections.Reading_Recollections"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.readingrecollections.d424_software_engineering_capstone"
+        applicationId = "com.readingrecollections.Reading_Recollections"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "d424-software-engineering-capstone"
+rootProject.name = "Reading Recollections"
 include(":app")
  

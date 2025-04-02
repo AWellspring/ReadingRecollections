@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/d424-software-engineering-capstone.iml" filepath="$PROJECT_DIR$/.idea/d424-software-engineering-capstone.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/d424-software-engineering-capstone.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Reading_Recollections.iml" filepath="$PROJECT_DIR$/.idea/modules/Reading_Recollections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Reading_Recollections.app.unitTest.iml" />
     </modules>
   </component>
 </project>
